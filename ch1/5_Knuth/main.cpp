@@ -46,7 +46,7 @@ void shuffleAlternate_(vector<T> &a) {
 */
 int main() {
     // TODO: change to relative path
-    ifstream file("/home/ace/AceDev/C++/algorithm/ch1/5_Knuth/cards.txt");
+    ifstream file("/home/ace/AceDev/C++/algorithm/ch1/data/cards.txt");
     string tmp;
     vector<string> a;
     while (file >> tmp) {
