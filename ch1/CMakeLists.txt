@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.8)
+project(ch1)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_subdirectory(1_BinarySearch)
+add_subdirectory(2_RandomSeq)
+add_subdirectory(3_Average)
+add_subdirectory(4_Cat)
+add_subdirectory(5_Knuth)
+add_subdirectory(6_Counter)
+add_subdirectory(7_StaticSETofInts)
+add_subdirectory(8_Whitelist)
+add_subdirectory(9_vector)
+add_subdirectory(10_Date)
