@@ -1,3 +1,13 @@
 # algs4cplusplus
 Algorithms, 4th edition textbook code (using c++)
 
+## ch1. Fundamentals
+
+|                           REF                           |                           PROGRAM                            |      DESCRIPTION / JAVADOC       |                           REF                           |                           PROGRAM                            | DESCRIPTION / JAVADOC |
+| :-----------------------------------------------------: | :----------------------------------------------------------: | :------------------------------: | :-----------------------------------------------------: | :----------------------------------------------------------: | :-------------------: |
+| [-](https://algs4.cs.princeton.edu/11model/index.php#-) | [BinarySearch.java](https://algs4.cs.princeton.edu/11model/BinarySearch.java.html) |          binary search           | [-](https://algs4.cs.princeton.edu/11model/index.php#-) | [StaticSETofInts.java](https://algs4.cs.princeton.edu/12oop/StaticSETofInts.java.html) |    set of integers    |
+| [-](https://algs4.cs.princeton.edu/11model/index.php#-) | [RandomSeq.java](https://algs4.cs.princeton.edu/11model/RandomSeq.java.html) | random numbers in a given range  |  [-](https://algs4.cs.princeton.edu/12oop/index.php#-)  | [Whitelist.java](https://algs4.cs.princeton.edu/12oop/Whitelist.java.html) |   whitelist client    |
+| [-](https://algs4.cs.princeton.edu/11model/index.php#-) | [Average.java](https://algs4.cs.princeton.edu/11model/Average.java.html) | average of a sequence of numbers |  [-](https://algs4.cs.princeton.edu/12oop/index.php#-)  | [Vector.java](https://algs4.cs.princeton.edu/12oop/Vector.java.html) |   Euclidean vector    |
+| [-](https://algs4.cs.princeton.edu/11model/index.php#-) | [Cat.java](https://algs4.cs.princeton.edu/11model/Cat.java.html) |        concatenate files         |                                                         |                                                              |                       |
+| [-](https://algs4.cs.princeton.edu/11model/index.php#-) | [Knuth.java](https://algs4.cs.princeton.edu/11model/Knuth.java.html) |          Knuth shuffle           |                                                         |                                                              |                       |
+|  [-](https://algs4.cs.princeton.edu/12oop/index.php#-)  | [Counter.java](https://algs4.cs.princeton.edu/12oop/Counter.java.html) |             counter              |                                                         |                                                              |                       |
