@@ -1,52 +1,10 @@
 #include <iostream>
 #include <vector>
-#include <iomanip>
 #include <algorithm>
+#include "../head/Counter.h"
 
 using namespace std;
 
-
-class Counter {
-public:
-    /**
-     * Initializes a new counter starting at 0, with the given id.
-     * @param id the name of the counter
-     */
-    Counter(string id) : name(id) {}
-
-    /**
-     * Increments the counter by 1.
-     */
-    void increment() {
-        count++;
-    }
-
-    /**
-     * Returns the current value of this counter.
-     *
-     * @return the current value of this counter
-     */
-    int tally() {
-        return count;
-    }
-
-    /**
-     * Returns a string representation of this counter.
-     *
-     * @return a string representation of this counter
-     */
-    string toString() {
-        return to_string(count) + " " + name;
-    }
-
-    bool operator<(const Counter &rhs) {
-        return (this->count < rhs.count);
-    }
-
-private:
-    const string name;
-    int count = 0;
-};
 
 const int seed = 100;
 
@@ -65,5 +23,5 @@ int main() {
     }
     // print results
     for (int i = 0; i < n; ++i)
-        cout << hits[i].toString() << endl;
+        cout << hits[i] << endl;
 }
