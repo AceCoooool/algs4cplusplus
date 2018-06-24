@@ -6,6 +6,7 @@ Algorithms, 4th edition textbook code (using c++)
 1. based on STL Library
 2. using C++14
 3. **Not support** drawing
+4. Welcome to point out the error, and pull better code
 
 > the code is writed and debug in CLion IDE，and not test in terminal（I will check it after finish more code）
 
@@ -32,3 +33,12 @@ Algorithms, 4th edition textbook code (using c++)
 |     [-](https://algs4.cs.princeton.edu/15uf/index.php#-)     |          [QuickFindUF.h](ch1/head/QuickFindUF.h)          |            quick find            |     [-](https://algs4.cs.princeton.edu/15uf/index.php#-)     |       [QuickUnionUF.h](ch1/head/QuickUnionUF.h)       |           quick union           |
 |   [1.5](https://algs4.cs.princeton.edu/15uf/index.php#1.5)   | [WeightedQuickUnionUF.h](ch1/head/WeightedQuickUnionUF.h) |       weighted quick union       |     [-](https://algs4.cs.princeton.edu/15uf/index.php#-)     |                 [UF.h](ch1/head/UF.h)                 | union-by-rank with path halving |
 
+## ch2. Sorting
+
+|                             REF                              |                           PROGRAM                            | DESCRIPTION / JAVADOC |                             REF                              |                           PROGRAM                            |   DESCRIPTION / JAVADOC    |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :-------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :------------------------: |
+| [2.1](https://algs4.cs.princeton.edu/21elementary/index.php#2.1) |             [Insertion.h](ch2/head/Insertion.h)              |    insertion sort     | [-](https://algs4.cs.princeton.edu/21elementary/index.php#-) |            [InsertionX.h](ch2/head/InsertionX.h)             | insertion sort (optimized) |
+| [-](https://algs4.cs.princeton.edu/21elementary/index.php#-) |          [BinaryInsertion.h](ch2/head/InsertionX.h)          | binary insertion sort | [2.2](https://algs4.cs.princeton.edu/21elementary/index.php#2.2) |             [Selection.h](ch2/head/InsertionX.h)             |       selection sort       |
+| [2.3](https://algs4.cs.princeton.edu/21elementary/index.php#2.3) | [Shell.java](https://algs4.cs.princeton.edu/21elementary/Shell.java.html) |       shellsort       | [2.4](https://algs4.cs.princeton.edu/22mergesort/index.php#2.4) | [Merge.java](https://algs4.cs.princeton.edu/22mergesort/Merge.java.html) |     top-down mergesort     |
+| [-](https://algs4.cs.princeton.edu/22mergesort/index.php#-)  |               [MergeBU.h](ch2/head/MergeBU.h)                |  bottom-up mergesort  | [-](https://algs4.cs.princeton.edu/22mergesort/index.php#-)  |                [MergeX.h](ch2/head/MergeX.h)                 |    optimized mergesort     |
+|                                                              |                                                              |                       |                                                              |                                                              |                            |

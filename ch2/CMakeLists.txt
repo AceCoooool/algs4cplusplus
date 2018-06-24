@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.8)
+project(ch2)
+
+set(CMAKE_CXX_STANDARD 14)
+
+include_directories(head)
+
+add_subdirectory(1_Insertion)
+add_subdirectory(2_InsertionX)
+add_subdirectory(3_BinaryInsertion)
+add_subdirectory(4_Selection)
+add_subdirectory(5_Shell)
+add_subdirectory(6_Merge)
+add_subdirectory(7_MergeBU)
+add_subdirectory(8_MergeX)
