@@ -58,7 +58,9 @@ public:
      *         {@code null} if the key is not in this symbol table
      * @throws IllegalArgumentException if {@code key} is {@code null}
      */
-    Value get(Key key) {
+
+    //TODO: lvalue may be a bug
+    Value& get (const Key key) {
         if (st.find(key) == st.end()) throw runtime_error("key is not in symbol table!");
         return st[key];
     }
@@ -184,6 +186,11 @@ public:
     typename map<Key, Value>::iterator begin() { return st.begin(); }
 
     typename map<Key, Value>::iterator end() { return st.end(); }
+
+    // TODO: bug here
+    typename map<Key, Value>::const_iterator begin() const { return st.cbegin(); }
+
+    typename map<Key, Value>::const_iterator end() const { return st.cend(); }
 
 
 private:
