@@ -6,6 +6,7 @@ Algorithms, 4th edition textbook code (using c++)
 1. based on STL Library
 2. using C++14
 3. **Not support** drawing
+4. **Bug: ** const object (many member function forget to add const)
 4. Welcome to point out the error, and pull better code
 
 > the code is writed and debug in CLion IDE，and not test in terminal（I will check it after finish more code）
