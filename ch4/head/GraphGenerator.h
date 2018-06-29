@@ -111,6 +111,7 @@ public:
         while (G.getE() < E) {
             int i = dis1(g);
             int j = V1 + dis2(g);
+            cout << vertices[i] << " " << vertices[j] << endl;
             Edge e(vertices[i], vertices[j]);
             if (set_.find(e) == set_.end()) {
                 set_.insert(e);
@@ -185,10 +186,15 @@ public:
 
         friend bool operator<(const Edge &e1, const Edge &e2) {
             if (e1.v < e2.v) return true;
-            if (e1.v >= e2.v) return false;
+            if (e1.v > e2.v) return false;
             if (e1.w < e2.w) return true;
-            if (e1.w >= e2.w) return false;
+            if (e1.w > e2.w) return false;
             return false;
+        }
+
+        friend bool operator==(const Edge &e1, const Edge &e2) {
+            if (e1.v == e2.v && e1.w == e2.w) return true;
+            else return false;
         }
 
     private:

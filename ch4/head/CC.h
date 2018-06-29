@@ -1,6 +1,7 @@
 #ifndef CH4_CC_H
 #define CH4_CC_H
 
+// TODO: add EdgeWeightedGraph
 #include "../head/Graph.h"
 
 /**
@@ -33,6 +34,92 @@
  */
 class CC {
 public:
+    /**
+     * Computes the connected components of the undirected graph {@code G}.
+     *
+     * @param G the undirected graph
+     */
+    CC(Graph &G) : marked(G.getV()), id(G.getV()), size(G.getV()), count(0) {
+        for (int v = 0; v < G.getV(); v++) {
+            if (!marked[v]) {
+                dfs(G, v);
+                count++;
+            }
+        }
+    }
+
+    /**
+     * Returns the component id of the connected component containing vertex {@code v}.
+     *
+     * @param  v the vertex
+     * @return the component id of the connected component containing vertex {@code v}
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     */
+    int getid(int v) {
+        validateVertex(v);
+        return id[v];
+    }
+
+    /**
+     * Returns the number of vertices in the connected component containing vertex {@code v}.
+     *
+     * @param  v the vertex
+     * @return the number of vertices in the connected component containing vertex {@code v}
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     */
+    int getsize(int v) {
+        validateVertex(v);
+        return size[id[v]];
+    }
+
+    /**
+    * Returns the number of connected components in the graph {@code G}.
+    *
+    * @return the number of connected components in the graph {@code G}
+    */
+    int getcount() {
+        return count;
+    }
+
+    /**
+     * Returns true if vertices {@code v} and {@code w} are in the same
+     * connected component.
+     *
+     * @param  v one vertex
+     * @param  w the other vertex
+     * @return {@code true} if vertices {@code v} and {@code w} are in the same
+     *         connected component; {@code false} otherwise
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     * @throws IllegalArgumentException unless {@code 0 <= w < V}
+     */
+    bool connected(int v, int w) {
+        validateVertex(v);
+        validateVertex(w);
+        return getid(v) == getid(w);
+    }
+
+
+
+private:
+    // depth-first search for a Graph
+    void dfs(Graph G, int v) {
+        marked[v] = true;
+        id[v] = count;
+        size[count]++;
+        for (int w : G.getadj(v)) {
+            if (!marked[w]) {
+                dfs(G, w);
+            }
+        }
+    }
+
+    // throw an IllegalArgumentException unless {@code 0 <= v < V}
+    void validateVertex(int v) {
+        int V = marked.size();
+        if (v < 0 || v >= V)
+            throw runtime_error("vertex " + to_string(v) + " is not between 0 and " + to_string(V - 1));
+    }
+
 
 private:
     vector<bool> marked;   // marked[v] = has vertex v been marked?
