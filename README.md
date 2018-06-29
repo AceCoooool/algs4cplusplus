@@ -62,3 +62,11 @@ Algorithms, 4th edition textbook code (using c++)
 | [-](https://algs4.cs.princeton.edu/35applications/index.php#-) |       [LookupCSV.cpp](ch3/13_LookupCSV/main.cpp)        |     dictionary lookup     | [-](https://algs4.cs.princeton.edu/35applications/index.php#-) |        [LookupIndex.cpp](ch3/14_LookupIndex/main.cpp)        |   index and inverted index   |
 | [-](https://algs4.cs.princeton.edu/35applications/index.php#-) |       [FileIndex.cpp](ch3/15_FileIndex/main.cpp)        |       file indexing       | [-](https://algs4.cs.princeton.edu/35applications/index.php#-) |          [SparseVector.h](ch3/head/SparseVector.h)           |        sparse vector         |
 
+## ch4. Graphs
+
+|                             REF                             |                      PROGRAM                      |     DESCRIPTION / JAVADOC     |                             REF                             |                           PROGRAM                            |     DESCRIPTION / JAVADOC     |
+| :---------------------------------------------------------: | :-----------------------------------------------: | :---------------------------: | :---------------------------------------------------------: | :----------------------------------------------------------: | :---------------------------: |
+|   [-](https://algs4.cs.princeton.edu/41graph/index.php#-)   |            [Graph.h](ch4/head/Graph.h)            |       undirected graph        |   [-](https://algs4.cs.princeton.edu/41graph/index.php#-)   | [GraphGenerator.java](https://algs4.cs.princeton.edu/41graph/GraphGenerator.java.html) |    generate random graphs     |
+|   [-](https://algs4.cs.princeton.edu/41graph/index.php#-)   | [DepthFirstSearch.h](ch4/head/DepthFirstSearch.h) | depth-first search in a graph |   [-](https://algs4.cs.princeton.edu/41graph/index.php#-)   |       [NonrecursiveDFS.h](ch4/head/NonrecursiveDFS.h)        | DFS in a graph (nonrecursive) |
+| [4.1](https://algs4.cs.princeton.edu/41graph/index.php#4.1) |  [DepthFirstPaths.h](ch4/head/DepthFirstPaths.h)  |    paths in a graph (DFS)     | [4.2](https://algs4.cs.princeton.edu/41graph/index.php#4.2) |     [BreadthFirstPaths.h](ch4/head/BreadthFirstPaths.h)      |    paths in a graph (BFS)     |
+
