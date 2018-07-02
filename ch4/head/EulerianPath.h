@@ -1,24 +1,24 @@
-#ifndef CH4_EULERIANCYCLE_H
-#define CH4_EULERIANCYCLE_H
+#ifndef CH4_EULERIANPATH_H
+#define CH4_EULERIANPATH_H
 
-#include <queue>
 #include "../head/Graph.h"
+#include <queue>
 
 using std::queue;
 
 /**
- *  The {@code EulerianCycle} class represents a data type
- *  for finding an Eulerian cycle or path in a graph.
- *  An <em>Eulerian cycle</em> is a cycle (not necessarily simple) that
+ *  The {@code EulerianPath} class represents a data type
+ *  for finding an Eulerian path in a graph.
+ *  An <em>Eulerian path</em> is a path (not necessarily simple) that
  *  uses every edge in the graph exactly once.
  *  <p>
  *  This implementation uses a nonrecursive depth-first search.
- *  The constructor runs in O(<Em>E</em> + <em>V</em>) time,
- *  and uses O(<em>E</em> + <em>V</em>) extra space, where <em>E</em> is the
- *  number of edges and <em>V</em> the number of vertices
+ *  The constructor runs in O(<em>E</em> + <em>V</em>) time,
+ *  and uses O(<em>E</em> + <em>V</em>) extra space,
+ *  where <em>E</em> is the number of edges and <em>V</em> the number of vertices
  *  All other methods take O(1) time.
  *  <p>
- *  To compute Eulerian paths in graphs, see {@link EulerianPath}.
+ *  To compute Eulerian cycles in graphs, see {@link EulerianCycle}.
  *  To compute Eulerian cycles and paths in digraphs, see
  *  {@link DirectedEulerianCycle} and {@link DirectedEulerianPath}.
  *  <p>
@@ -26,26 +26,37 @@ using std::queue;
  *  see <a href="https://algs4.cs.princeton.edu/41graph">Section 4.1</a> of
  *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *
- *  @author Robert Sedgewick
- *  @author Kevin Wayne
- *  @author Nate Liu
+ * @author Robert Sedgewick
+ * @author Kevin Wayne
+ * @author Nate Liu
  */
-class EulerianCycle {
+class EulerianPath {
 public:
     /**
-     * Computes an Eulerian cycle in the specified graph, if one exists.
+     * Computes an Eulerian path in the specified graph, if one exists.
      *
      * @param G the graph
      */
-    EulerianCycle(Graph &G) {
-        // must have at least one edge
-        if (G.getE() == 0) return;
+    EulerianPath(Graph &G) {
 
-        // necessary condition: all vertices have even degree
-        // (this test is needed or it might find an Eulerian path instead of cycle)
-        for (int v = 0; v < G.getV(); v++)
-            if (G.degree(v) % 2 != 0)
-                return;
+        // find vertex from which to start potential Eulerian path:
+        // a vertex v with odd degree(v) if it exits;
+        // otherwise a vertex with degree(v) > 0
+        int oddDegreeVertices = 0;
+        int s = nonIsolatedVertex(G);
+        for (int v = 0; v < G.getV(); v++) {
+            if (G.degree(v) % 2 != 0) {
+                oddDegreeVertices++;
+                s = v;
+            }
+        }
+
+        // graph can't have an Eulerian path
+        // (this condition is needed for correctness)
+        if (oddDegreeVertices > 2) return;
+
+        // special case for graph with zero edges (has a degenerate Eulerian path)
+        if (s == -1) s = 0;
 
         // create local view of adjacency lists, to iterate one vertex at a time
         // the helper Edge data type is used to avoid exploring both copies of an edge v-w
@@ -55,7 +66,7 @@ public:
             int selfLoops = 0;
             for (int w : G.getadj(v)) {
                 // careful with self loops
-                if (v == w) {  //TODO ?
+                if (v == w) {
                     if (selfLoops % 2 == 0) {
                         Edge e(v, w);
                         adj[v].push(e);
@@ -71,7 +82,6 @@ public:
         }
 
         // initialize stack with any non-isolated vertex
-        int s = nonIsolatedVertex(G);
         stack<int> stack1;
         stack1.push(s);
 
@@ -87,47 +97,47 @@ public:
                 stack1.push(v);
                 v = edge.other(v);
             }
-            // push vertex with no more leaving edges to cycle
-            cycle.push(v);
+            // push vertex with no more leaving edges to path
+            path.push(v);
         }
 
         // check if all edges are used
-        if (cycle.size() != G.getE() + 1) {
-            while (!cycle.empty())
-                cycle.pop();
+        if (path.size() != G.getE() + 1) {
+            while (!path.empty())
+                path.pop();
         }
     }
 
     /**
-     * Returns true if the graph has an Eulerian cycle.
+     * Returns the sequence of vertices on an Eulerian path.
      *
-     * @return {@code true} if the graph has an Eulerian cycle;
-     *         {@code false} otherwise
+     * @return the sequence of vertices on an Eulerian path;
+     *         {@code null} if no such path
      */
-    bool hasEulerianCycle() {
-        return !cycle.empty();
+    stack<int> getpath() {
+        return path;
     }
 
     /**
-     * Returns the sequence of vertices on an Eulerian cycle.
+     * Returns true if the graph has an Eulerian path.
      *
-     * @return the sequence of vertices on an Eulerian cycle;
-     *         {@code null} if no such cycle
+     * @return {@code true} if the graph has an Eulerian path;
+     *         {@code false} otherwise
      */
-    stack<int> getcycle() {
-        return cycle;
+    bool hasEulerianPath() {
+        return !path.empty();
     }
 
     static void unitTest(Graph &G, string description) {
-        cout << description << endl;
+        cout << description;
         cout << "-------------------------------------" << endl;
         cout << G;
 
-        EulerianCycle euler(G);
+        EulerianPath euler(G);
 
-        cout << "Eulerian cycle: ";
-        if (euler.hasEulerianCycle()) {
-            auto tmp = euler.getcycle();
+        cout << "Eulerian path:  ";
+        if (euler.hasEulerianPath()) {
+            auto tmp = euler.getpath();
             while (!tmp.empty()) {
                 auto v = tmp.top();
                 tmp.pop();
@@ -135,7 +145,7 @@ public:
             }
             cout << endl;
         } else {
-            cout << "none" << endl;
+            cout << "None" << endl;
         }
         cout << endl;
     }
@@ -150,6 +160,7 @@ private:
     }
 
 private:
+    // an undirected edge, with a field to indicate whether the edge has already been used
     class Edge {
     public:
         int v, w;
@@ -166,7 +177,7 @@ private:
     };
 
 private:
-    stack<int> cycle;
+    stack<int> path;  // Eulerian path; empty if no suh path
 };
 
-#endif //CH4_EULERIANCYCLE_H
+#endif //CH4_EULERIANPATH_H

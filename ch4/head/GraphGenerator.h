@@ -175,6 +175,93 @@ public:
         return G;
     }
 
+    /**
+     * Returns a complete binary tree graph on {@code V} vertices.
+     * @param V the number of vertices in the binary tree
+     * @return a complete binary tree graph on {@code V} vertices
+     */
+    static Graph binaryTree(int V) {
+        Graph G(V);
+        vector<int> vertices(V);
+        for (int i = 0; i < V; i++)
+            vertices[i] = i;
+        std::shuffle(vertices.begin(), vertices.end(), g);
+        for (int i = 1; i < V; i++) {
+            G.addEdge(vertices[i], vertices[(i - 1) / 2]);
+        }
+        return G;
+    }
+
+    /**
+     * Returns a cycle graph on {@code V} vertices.
+     * @param V the number of vertices in the cycle
+     * @return a cycle graph on {@code V} vertices
+     */
+    static Graph cycle(int V) {
+        Graph G(V);
+        vector<int> vertices(V);
+        for (int i = 0; i < V; i++)
+            vertices[i] = i;
+        std::shuffle(vertices.begin(), vertices.end(), g);
+        for (int i = 0; i < V - 1; i++) {
+            G.addEdge(vertices[i], vertices[i + 1]);
+        }
+        G.addEdge(vertices[V - 1], vertices[0]);
+        return G;
+    }
+
+    /**
+     * Returns an Eulerian cycle graph on {@code V} vertices.
+     *
+     * @param  V the number of vertices in the cycle
+     * @param  E the number of edges in the cycle
+     * @return a graph that is an Eulerian cycle on {@code V} vertices
+     *         and {@code E} edges
+     * @throws IllegalArgumentException if either {@code V <= 0} or {@code E <= 0}
+     */
+    // 选择一部分点, 构成环
+    static Graph eulerianCycle(int V, int E) {
+        if (E <= 0)
+            throw runtime_error("An Eulerian cycle must have at least one edge");
+        if (V <= 0)
+            throw runtime_error("An Eulerian cycle must have at least one vertex");
+        Graph G(V);
+        vector<int> vertices(E);
+        uniform_int_distribution<> dis(0, V - 1);
+        for (int i = 0; i < E; i++)
+            vertices[i] = dis(g);
+        for (int i = 0; i < E - 1; i++) {
+            G.addEdge(vertices[i], vertices[i + 1]);
+        }
+        G.addEdge(vertices[E - 1], vertices[0]);
+        return G;
+    }
+
+    /**
+     * Returns an Eulerian path graph on {@code V} vertices.
+     *
+     * @param  V the number of vertices in the path
+     * @param  E the number of edges in the path
+     * @return a graph that is an Eulerian path on {@code V} vertices
+     *         and {@code E} edges
+     * @throws IllegalArgumentException if either {@code V <= 0} or {@code E < 0}
+     */
+    static Graph eulerianPath(int V, int E) {
+        if (E < 0)
+            throw runtime_error("negative number of edges");
+        if (V <= 0)
+            throw runtime_error("An Eulerian path must have at least one vertex");
+        Graph G(V);
+        vector<int> vertices(E + 1);
+        uniform_int_distribution<> dis(0, V - 1);
+        for (int i = 0; i < E + 1; i++)
+            vertices[i] = dis(g);
+        for (int i = 0; i < E; i++) {
+            G.addEdge(vertices[i], vertices[i + 1]);
+        }
+        return G;
+    }
+
 
 public:
     class Edge {

@@ -90,7 +90,7 @@ public:
      *
      * @param  G the graph to copy
      */
-    Graph(const Graph &G) : Graph(G.V) {
+    Graph(const Graph &G): Graph(G.getV()) {
         E = G.getE();
         for (int v = 0; v < G.V; v++) {
             // reverse so that adjacency list is in same order as original
