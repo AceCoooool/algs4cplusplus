@@ -1,7 +1,6 @@
 #include <iostream>
 #include "../head/GraphGenerator.h"
 #include "../head/EulerianPath.h"
-#include "../head/EulerianCycle.h"
 
 // TODO: there is a bug
 using namespace std;
@@ -17,7 +16,7 @@ int main() {
 
     // Eulerian cycle
     Graph G1 = GraphGenerator::eulerianCycle(V, E);
-    EulerianCycle::unitTest(G1, "Eulerian cycle");
+    EulerianPath::unitTest(G1, "Eulerian cycle");
 
     // Eulerian path
     Graph G2 = GraphGenerator::eulerianPath(V, E);

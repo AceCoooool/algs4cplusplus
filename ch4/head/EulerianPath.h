@@ -60,7 +60,7 @@ public:
 
         // create local view of adjacency lists, to iterate one vertex at a time
         // the helper Edge data type is used to avoid exploring both copies of an edge v-w
-        vector<queue<Edge>> adj(G.getV());
+        vector<queue<Edge*>> adj(G.getV());
 
         for (int v = 0; v < G.getV(); v++) {
             int selfLoops = 0;
@@ -68,13 +68,13 @@ public:
                 // careful with self loops
                 if (v == w) {
                     if (selfLoops % 2 == 0) {
-                        Edge e(v, w);
+                        Edge *e = new Edge(v, w);
                         adj[v].push(e);
                         adj[w].push(e);
                     }
                     selfLoops++;
                 } else if (v < w) {
-                    Edge e(v, w);
+                    Edge *e = new Edge(v, w);
                     adj[v].push(e);
                     adj[w].push(e);
                 }
@@ -90,12 +90,12 @@ public:
             int v = stack1.top();
             stack1.pop();
             while (!adj[v].empty()) {
-                Edge edge = adj[v].front();
+                Edge *edge = adj[v].front();
                 adj[v].pop();
-                if (edge.isUsed) continue;
-                edge.isUsed = true;
+                if (edge->isUsed) continue;
+                edge->isUsed = true;
                 stack1.push(v);
-                v = edge.other(v);
+                v = edge->other(v);
             }
             // push vertex with no more leaving edges to path
             path.push(v);
@@ -129,7 +129,7 @@ public:
     }
 
     static void unitTest(Graph &G, string description) {
-        cout << description;
+        cout << description << endl;
         cout << "-------------------------------------" << endl;
         cout << G;
 

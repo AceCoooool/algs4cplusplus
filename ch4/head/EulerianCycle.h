@@ -49,7 +49,7 @@ public:
 
         // create local view of adjacency lists, to iterate one vertex at a time
         // the helper Edge data type is used to avoid exploring both copies of an edge v-w
-        vector<queue<Edge>> adj(G.getV());
+        vector<queue<Edge*>> adj(G.getV());
 
         for (int v = 0; v < G.getV(); v++) {
             int selfLoops = 0;
@@ -57,13 +57,13 @@ public:
                 // careful with self loops
                 if (v == w) {  //TODO ?
                     if (selfLoops % 2 == 0) {
-                        Edge e(v, w);
+                        Edge *e = new Edge(v, w);
                         adj[v].push(e);
                         adj[w].push(e);
                     }
                     selfLoops++;
                 } else if (v < w) {
-                    Edge e(v, w);
+                    Edge *e = new Edge(v, w);
                     adj[v].push(e);
                     adj[w].push(e);
                 }
@@ -80,21 +80,20 @@ public:
             int v = stack1.top();
             stack1.pop();
             while (!adj[v].empty()) {
-                Edge edge = adj[v].front();
+                Edge *edge = adj[v].front();
                 adj[v].pop();
-                if (edge.isUsed) continue;
-                edge.isUsed = true;
+                if (edge->isUsed) continue;
+                edge->isUsed = true;
                 stack1.push(v);
-                v = edge.other(v);
+                v = edge->other(v);
             }
             // push vertex with no more leaving edges to cycle
-            cycle.push(v);
+            cycle.push_front(v);
         }
 
         // check if all edges are used
-        if (cycle.size() != G.getE() + 1) {
-            while (!cycle.empty())
-                cycle.pop();
+        if (std::distance(cycle.begin(), cycle.end()) != G.getE() + 1) {
+            cycle.clear();
         }
     }
 
@@ -114,7 +113,7 @@ public:
      * @return the sequence of vertices on an Eulerian cycle;
      *         {@code null} if no such cycle
      */
-    stack<int> getcycle() {
+    forward_list<int> getcycle() {
         return cycle;
     }
 
@@ -128,11 +127,8 @@ public:
         cout << "Eulerian cycle: ";
         if (euler.hasEulerianCycle()) {
             auto tmp = euler.getcycle();
-            while (!tmp.empty()) {
-                auto v = tmp.top();
-                tmp.pop();
-                cout << v << " ";
-            }
+            for (auto k: tmp)
+                cout << k << " ";
             cout << endl;
         } else {
             cout << "none" << endl;
@@ -166,7 +162,7 @@ private:
     };
 
 private:
-    stack<int> cycle;
+    forward_list<int> cycle;
 };
 
 #endif //CH4_EULERIANCYCLE_H

@@ -1,6 +1,7 @@
 #ifndef CH4_GRAPHGENERATOR_H
 #define CH4_GRAPHGENERATOR_H
 
+// TODO: change to point forms
 #include <set>
 #include <random>
 #include <algorithm>
