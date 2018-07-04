@@ -3,6 +3,7 @@
 
 // TODO: add edgeweightedgraph
 #include "../head/Digraph.h"
+#include "../head/EdgeWeightedDigraph.h"
 #include <queue>
 
 using std::queue;
@@ -35,6 +36,15 @@ public:
     DepthFirstOrder(Digraph &G) : pre(G.getV()), post(G.getV()), marked(G.getV(), false),
                                   preCounter(0), postCounter(0) {
         for (int v = 0; v < G.getV(); v++)
+            if (!marked[v]) dfs(G, v);
+    }
+
+    /**
+     * Determines a depth-first order for the edge-weighted digraph {@code G}.
+     * @param G the edge-weighted digraph
+     */
+    DepthFirstOrder(EdgeWeightedDigraph &G): pre(G.V_()), post(G.V_()), marked(G.V_(), false) {
+        for (int v = 0; v < G.V_(); v++)
             if (!marked[v]) dfs(G, v);
     }
 
@@ -98,6 +108,21 @@ private:
         pre[v] = preCounter++;
         preorder.push(v);
         for (int w : G.getadj(v)) {
+            if (!marked[w]) {
+                dfs(G, w);
+            }
+        }
+        postorder.push(v);
+        post[v] = postCounter++;
+    }
+
+    // run DFS in edge-weighted digraph G from vertex v and compute preorder/postorder
+    void dfs(EdgeWeightedDigraph &G, int v) {
+        marked[v] = true;
+        pre[v] = preCounter++;
+        preorder.push(v);
+        for (DirectedEdge e : G.adj_(v)) {
+            int w = e.to();
             if (!marked[w]) {
                 dfs(G, w);
             }
