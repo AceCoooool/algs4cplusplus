@@ -95,3 +95,11 @@ Algorithms, 4th edition textbook code (using c++)
 |     [-](https://algs4.cs.princeton.edu/44sp/index.php#-)     |          [Arbitrage.cpp](ch4/49_Arbitrage/main.cpp)          |       arbitrage detection        |     [-](https://algs4.cs.princeton.edu/44sp/index.php#-)     |         [FloydWarshall.h](ch4/head/FloydWarshall.h)          |   all-pairs shortest paths (dense)   |
 |     [-](https://algs4.cs.princeton.edu/44sp/index.php#-)     | [AdjMatrixEdgeWeightedDigraph.h](ch4/head/AdjMatrixEdgeWeightedDigraph.h) |   edge-weighted graph (dense)    |                                                              |                                                              |                                      |
 
+## ch5. Strings
+
+|                             REF                             |                           PROGRAM                            |   DESCRIPTION / C++DOC   |                             REF                             |                           PROGRAM                            | DESCRIPTION / C++DOC |
+| :---------------------------------------------------------: | :----------------------------------------------------------: | :----------------------: | :---------------------------------------------------------: | :----------------------------------------------------------: | :------------------: |
+|  [-](https://algs4.cs.princeton.edu/50strings/index.php#-)  | [Alphabet.java](https://algs4.cs.princeton.edu/50strings/Alphabet.java.html) |         alphabet         |  [-](https://algs4.cs.princeton.edu/50strings/index.php#-)  | [Count.java](https://algs4.cs.princeton.edu/50strings/Count.java.html) |   alphabet client    |
+| [5.1](https://algs4.cs.princeton.edu/51radix/index.php#5.1) |                   [LSD.h](ch5/head/LSD.h)                    |      LSD radix sort      | [5.2](https://algs4.cs.princeton.edu/51radix/index.php#5.2) |                   [MSD.h](ch5/head/MSD.h)                    |    MSD radix sort    |
+|   [-](https://algs4.cs.princeton.edu/51radix/index.php#-)   |            [InplaceMSD.h](ch5/head/InplaceMSD.h)             | In-place MSD radix sort1 |                                                             |                                                              |                      |
+
