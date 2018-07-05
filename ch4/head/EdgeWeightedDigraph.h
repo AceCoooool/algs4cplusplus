@@ -9,8 +9,6 @@
 #include <sstream>
 #include <iostream>
 
-std::random_device rd;
-std::mt19937 g(rd());
 using std::vector;
 using std::forward_list;
 using std::uniform_int_distribution;
@@ -199,6 +197,23 @@ public:
     int indegree_(int v) const {
         validateVertex(v);
         return indegree[v];
+    }
+
+    /**
+     * Returns all directed edges in this edge-weighted digraph.
+     * To iterate over the edges in this edge-weighted digraph, use foreach notation:
+     * {@code for (DirectedEdge e : G.edges())}.
+     *
+     * @return all edges in this edge-weighted digraph, as an iterable
+     */
+    forward_list<DirectedEdge> edges() {
+        forward_list<DirectedEdge> list;
+        for (int v = 0; v < V; v++) {
+            for (DirectedEdge e : adj_(v)) {
+                list.push_front(e);
+            }
+        }
+        return list;
     }
 
     /**

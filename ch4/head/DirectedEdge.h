@@ -40,6 +40,9 @@ public:
         if (w < 0) throw runtime_error("Vertex names must be nonnegative integers");
     }
 
+    // default init, as a "not exist" edge
+    DirectedEdge() : v(-1), w(-1) {}
+
     /**
      * Returns the tail vertex of the directed edge.
      * @return the tail vertex of the directed edge

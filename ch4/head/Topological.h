@@ -3,6 +3,8 @@
 
 #include "../head/Digraph.h"
 #include "../head/DirectedCycle.h"
+#include "../head/EdgeWeightedDigraph.h"
+#include "../head/EdgeWeightedDirectedCycle.h"
 #include "../head/DepthFirstOrder.h"
 
 /**
@@ -48,6 +50,19 @@ public:
             int i = 0;
             for (int v : order)
                 rank[v] = i++;
+        }
+    }
+
+    /**
+     * Determines whether the edge-weighted digraph {@code G} has a topological
+     * order and, if so, finds such an order.
+     * @param G the edge-weighted digraph
+     */
+    Topological(EdgeWeightedDigraph &G) {
+        EdgeWeightedDirectedCycle finder(G);
+        if (!finder.hasCycle()) {
+            DepthFirstOrder dfs(G);
+            order = dfs.reversePost();
         }
     }
 
