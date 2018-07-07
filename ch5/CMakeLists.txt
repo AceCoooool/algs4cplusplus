@@ -15,6 +15,9 @@ add_subdirectory(8_AmericanFlagX)
 add_subdirectory(9_TrieST)
 add_subdirectory(10_TrieSET)
 add_subdirectory(11_TST)
+add_subdirectory(12_KMP)
+add_subdirectory(13_BoyerMoore)
+add_subdirectory(14_RabinKarp)
 
 
 add_subdirectory(temp)
