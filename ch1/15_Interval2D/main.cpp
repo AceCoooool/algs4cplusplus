@@ -5,7 +5,11 @@
 
 using namespace std;
 
-
+/**
+ * Unit tests the {@code Interval2D} data type.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
     Interval1D v1(1, 3), v2(1, 3);
     Interval2D d1(v1, v2);

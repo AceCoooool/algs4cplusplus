@@ -1,11 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <algorithm>
 
 using namespace std;
-
-const int seed = 100;
 
 /**
 * Reads in a sequence of text files specified as the first command-line
@@ -15,10 +12,8 @@ const int seed = 100;
 * @param args the command-line arguments
 */
 int main() {
-    // TODO: change to relative path
-    ofstream out("/home/ace/AceDev/C++/algorithm/ch1/data/out.txt");
-    vector<string> files{"/home/ace/AceDev/C++/algorithm/ch1/data/in1.txt",
-                         "/home/ace/AceDev/C++/algorithm/ch1/data/in2.txt"};
+    ofstream out("./data/out.txt");
+    vector<string> files{"./data/in1.txt", "./data/in2.txt"};
     string tmp;
     for (int i = 0; i < files.size(); ++i) {
         ifstream in(files[i]);

@@ -5,7 +5,11 @@
 
 using namespace std;
 
-
+/**
+ * Unit tests the {@code Interval1D} data type.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
     vector<Interval1D> intervals;
     intervals.push_back(Interval1D(15.0, 33.0));

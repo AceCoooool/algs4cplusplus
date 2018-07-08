@@ -8,10 +8,27 @@ Algorithms, 4th edition textbook code (using c++)
 1. based on STL Library
 2. using C++14
 3. **Not support** drawing
-4. **Bug: ** ① const object (many member function forget to add const) ② memory leak ③ point or reference ?
+4. **Bug: ** ① const object (many member function forget to add const) 
 4. Welcome to point out the error, and pull better code
 
-> the code is writed and debug in CLion IDE，and not test in terminal（I will check it after finish more code）
+## How to run demo
+
+### terminal
+
+```shell
+# for example 
+cd ch1
+g++ 1_BinarySearch/main.cpp -o binary
+./binary
+```
+
+### IDE(clion)
+
+You sholud Edit the Configurations：（Due to the relative file path）
+
+```shell
+Working directory: youroot/algs4cplusplus/ch1
+```
 
 ## ch1. Fundamentals
 

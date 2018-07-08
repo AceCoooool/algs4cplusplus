@@ -3,7 +3,11 @@
 
 using namespace std;
 
-
+/**
+ * Unit tests the {@code Vector} data type.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
     vector<double> xdata{1.0, 2.0, 3.0, 4.0};
     vector<double> ydata{5.0, 2.0, 4.0, 1.0};

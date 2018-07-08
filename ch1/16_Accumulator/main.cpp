@@ -4,7 +4,11 @@
 
 using namespace std;
 
-
+/**
+ * Unit tests the {@code Interval2D} data type.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
     Accumulator stats;
     vector<double> nums{10.0, 12.0, 14.0, 2.0};

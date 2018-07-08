@@ -3,7 +3,11 @@
 
 using namespace std;
 
-
+/**
+ * Unit tests the {@code Date} data type.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
     Date today(2, 25, 2004);
     cout << today << endl;

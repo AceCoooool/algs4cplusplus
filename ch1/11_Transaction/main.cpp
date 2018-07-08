@@ -4,7 +4,11 @@
 
 using namespace std;
 
-
+/**
+ * Unit tests the {@code Transaction} data type.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
     vector<Transaction> a;
     a.push_back(Transaction("Turing 6/17/1990 644.08"));

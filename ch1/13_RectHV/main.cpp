@@ -2,10 +2,12 @@
 #include <vector>
 #include "../head/RectHV.h"
 
-// TODO: un-finish
 using namespace std;
 
-
+/**
+ * simple test
+ * @return
+ */
 int main() {
     RectHV v1(1, 1, 4, 4);
     RectHV v2(2, 2, 3, 3);

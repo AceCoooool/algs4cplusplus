@@ -7,15 +7,13 @@
 using namespace std;
 
 /**
-* Reads in a sequence of text files specified as the first command-line
-* arguments, concatenates them, and writes the results to the file
-* specified as the last command-line argument.
-*
-* @param args the command-line arguments
-*/
+ * Reads in a sequence of strings from standard input, shuffles
+ * them, and prints out the results.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
-    // TODO: change to relative path
-    ifstream file("/home/ace/AceDev/C++/algorithm/ch1/data/cards.txt");
+    ifstream file("./data/cards.txt");
     string tmp;
     vector<string> a;
     while (file >> tmp) {

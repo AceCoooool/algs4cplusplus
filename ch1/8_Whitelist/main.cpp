@@ -12,13 +12,13 @@ using namespace std;
  * @param args the command-line arguments
  */
 int main() {
-    ifstream in("/home/ace/AceDev/C++/algorithm/ch1/data/tinyW.txt");
+    ifstream in("./data/tinyW.txt");
     int tmp;
     vector<int> white;
     while (in >> tmp)
         white.push_back(tmp);
     StaticSETofInts *p = new StaticSETofInts(white);
-    ifstream in2("/home/ace/AceDev/C++/algorithm/ch1/data/tinyT.txt");
+    ifstream in2("./data/tinyT.txt");
     while (in2 >> tmp) {
         if (!p->contains(tmp))
             cout << tmp << endl;

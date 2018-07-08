@@ -5,7 +5,11 @@
 
 using namespace std;
 
-
+/**
+ * Unit tests the point data type.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
     vector<Point2D> vec;
     vec.push_back(Point2D(1, 2));

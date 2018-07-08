@@ -4,9 +4,13 @@
 
 using namespace std;
 
-
+/**
+ * Unit tests the {@code LinkedStack} data type.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
-    ifstream file("/home/ace/AceDev/C++/algorithm/ch1/data/tobe.txt");
+    ifstream file("./data/tobe.txt");
     LinkedStack<string> stack;
     string tmp;
     while (file >> tmp) {
