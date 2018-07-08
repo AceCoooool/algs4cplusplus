@@ -51,7 +51,7 @@ public:
      *
      * @return the min endpoint of this interval
      */
-    double getmin() {
+    double min() const {
         return minval;
     }
 
@@ -60,7 +60,7 @@ public:
      *
      * @return the max endpoint of this interval
      */
-    double getmax() {
+    double max() const {
         return maxval;
     }
 
@@ -71,7 +71,7 @@ public:
      * @return {@code true} if this interval intersects the argument interval;
      *         {@code false} otherwise
      */
-    bool intersects(Interval1D &that) {
+    bool intersects(const Interval1D &that) const {
         if (maxval < that.minval) return false;
         if (that.maxval < minval) return false;
         return true;
@@ -84,7 +84,7 @@ public:
      * @return {@code true} if this interval contains the value {@code x};
      *         {@code false} otherwise
      */
-    bool contains(double x) {
+    bool contains(double x) const {
         return (minval <= x) && (x <= maxval);
     }
 
@@ -93,7 +93,7 @@ public:
      *
      * @return the length of this interval (max - min)
      */
-    double length() {
+    double length() const {
         return maxval - minval;
     }
 
@@ -102,13 +102,29 @@ public:
     friend bool operator==(const Interval1D &a1, const Interval1D &a2);
 
     // ascending order of min endpoint, breaking ties by max endpoint
-    static bool MinEndpointComparator(Interval1D a, Interval1D b);
+    static bool MinEndpointComparator(const Interval1D &a, const Interval1D &b) {
+        if (a.minval < b.minval) return true;
+        else if (a.minval > b.minval) return false;
+        else if (a.maxval < b.maxval) return true;
+        else if (a.maxval > b.maxval) return false;
+        else return false;
+    }
 
     // ascending order of max endpoint, breaking ties by min endpoint
-    static bool MaxEndpointComparator(Interval1D a, Interval1D b);
+    static bool MaxEndpointComparator(const Interval1D &a, const Interval1D &b) {
+        if (a.maxval < b.maxval) return true;
+        else if (a.maxval > b.maxval) return false;
+        else if (a.minval < b.minval) return true;
+        else if (a.minval > b.minval) return false;
+        else return false;
+    }
 
     // ascending order of length
-    static bool LengthComparator(Interval1D a, Interval1D b);
+    static bool LengthComparator(const Interval1D &a, const Interval1D &b) {
+        double al = a.length(), bl = b.length();
+        if (al < bl) return true;
+        else return false;
+    }
 
 private:
     double minval, maxval;
@@ -122,29 +138,5 @@ bool operator==(const Interval1D &a1, const Interval1D &a2) {
     return (a1.minval == a2.minval) && (a1.maxval == a2.maxval);
 }
 
-// ascending order of min endpoint, breaking ties by max endpoint
-bool Interval1D::MinEndpointComparator(Interval1D a, Interval1D b) {
-    if (a.minval < b.minval) return true;
-    else if (a.minval > b.minval) return false;
-    else if (a.maxval < b.maxval) return true;
-    else if (a.maxval > b.maxval) return false;
-    else return false;
-};
-
-// ascending order of max endpoint, breaking ties by min endpoint
-bool Interval1D::MaxEndpointComparator(Interval1D a, Interval1D b) {
-    if (a.maxval < b.maxval) return true;
-    else if (a.maxval > b.maxval) return false;
-    else if (a.minval < b.minval) return true;
-    else if (a.minval > b.minval) return false;
-    else return false;
-}
-
-// ascending order of length
-bool Interval1D::LengthComparator(Interval1D a, Interval1D b) {
-    double al = a.length(), bl = b.length();
-    if (al < bl) return true;
-    else return false;
-}
 
 #endif //CH1_INTERVAL1D_H

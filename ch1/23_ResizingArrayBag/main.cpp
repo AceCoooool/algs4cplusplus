@@ -4,9 +4,13 @@
 
 using namespace std;
 
-
+/**
+ * Unit tests the {@code ResizingArrayBag} data type.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
-    ifstream file("/home/ace/AceDev/C++/algorithm/ch1/data/tobe.txt");
+    ifstream file("./data/tobe.txt");
     ResizingArrayBag<string> bag;
     bag.add("Hello");
     bag.add("World");

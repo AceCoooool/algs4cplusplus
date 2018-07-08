@@ -2,7 +2,7 @@
 #define CH1_RECTHV_H
 
 #include <ostream>
-#include "../head/Point2D.h"
+#include "Point2D.h"
 
 /**
  *  The {@code RectHV} class is an immutable data type to encapsulate a
@@ -31,15 +31,15 @@ public:
      *         is {@code Double.NaN}.
      * @throws IllegalArgumentException if {@code xmax < xmin} or {@code ymax < ymin}.
      */
-    RectHV(double xmin_, double ymin_, double xmax_, double ymax_) : xmin(xmin_), ymin(ymin_), xmax(xmax_),
-                                                                     ymax(ymax_) {}
+    RectHV(double xmin, double ymin, double xmax, double ymax) : xmin(xmin), ymin(ymin),
+                                                                 xmax(xmax), ymax(ymax) {}
 
     /**
      * Returns the minimum <em>x</em>-coordinate of any point in this rectangle.
      *
      * @return the minimum <em>x</em>-coordinate of any point in this rectangle
      */
-    double getxmin() {
+    double xmin_() const {
         return xmin;
     }
 
@@ -48,7 +48,7 @@ public:
      *
      * @return the maximum <em>x</em>-coordinate of any point in this rectangle
      */
-    double getxmax() {
+    double xmax_() const {
         return xmax;
     }
 
@@ -57,7 +57,7 @@ public:
      *
      * @return the minimum <em>y</em>-coordinate of any point in this rectangle
      */
-    double getymin() {
+    double ymin_() const {
         return ymin;
     }
 
@@ -66,7 +66,7 @@ public:
      *
      * @return the maximum <em>y</em>-coordinate of any point in this rectangle
      */
-    double getymax() {
+    double ymax_() const {
         return ymax;
     }
 
@@ -75,7 +75,7 @@ public:
      *
      * @return the width of this rectangle {@code xmax - xmin}
      */
-    double width() {
+    double width() const {
         return xmax - xmin;
     }
 
@@ -85,7 +85,7 @@ public:
      *
      * @return the height of this rectangle {@code ymax - ymin}
      */
-    double height() {
+    double height() const{
         return ymax - ymin;
     }
 
@@ -99,7 +99,7 @@ public:
      * @return {@code true} if this rectangle intersect the argument
                rectangle at one or more points
      */
-    bool intersects(RectHV &that) {
+    bool intersects(const RectHV &that) {
         return xmax >= that.xmin && ymax >= that.ymin
                && that.xmax >= xmin && that.ymax >= ymin;
     }
@@ -110,9 +110,9 @@ public:
      * @return {@code true} if this rectangle contain the point {@code p},
                possibly at the boundary; {@code false} otherwise
      */
-    bool contains(Point2D &p) {
-        return (p.getx() >= xmin) && (p.getx() <= xmax)
-               && (p.gety() >= ymin) && (p.gety() <= ymax);
+    bool contains(const Point2D &p) {
+        return (p.x_() >= xmin) && (p.x_() <= xmax)
+               && (p.y_() >= ymin) && (p.y_() <= ymax);
     }
 
     /**
@@ -123,12 +123,12 @@ public:
      *         the closest point on this rectangle; 0 if the point is contained
      *         in this rectangle
      */
-    double distanceSquaredTo(Point2D &p) {
+    double distanceSquaredTo(const Point2D &p) {
         double dx = 0.0, dy = 0.0;
-        if (p.getx() < xmin) dx = p.getx() - xmin;
-        else if (p.getx() > xmax) dx = p.getx() - xmax;
-        if (p.gety() < ymin) dy = p.gety() - ymin;
-        else if (p.gety() > ymax) dy = p.gety() - ymax;
+        if (p.x_() < xmin) dx = p.x_() - xmin;
+        else if (p.x_() > xmax) dx = p.x_() - xmax;
+        if (p.y_() < ymin) dy = p.y_() - ymin;
+        else if (p.y_() > ymax) dy = p.y_() - ymax;
         return dx * dx + dy * dy;
     }
 
@@ -139,7 +139,7 @@ public:
      * @return the Euclidean distance between the point {@code p} and the closest point
                on this rectangle; 0 if the point is contained in this rectangle
      */
-    double distanceTo(Point2D &p) {
+    double distanceTo(const Point2D &p) {
         return sqrt(distanceSquaredTo(p));
     }
 

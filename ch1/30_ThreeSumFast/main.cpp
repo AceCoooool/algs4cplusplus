@@ -13,7 +13,7 @@ using namespace std;
  * @param args the command-line arguments
  */
 int main() {
-    ifstream file("/home/ace/AceDev/C++/algorithm/ch1/data/1Kints.txt");
+    ifstream file("./data/1Kints.txt");
     vector<int> vec;
     int tmp;
     while (file >> tmp)

@@ -3,10 +3,8 @@
 
 // TODO: add iterator support
 #include <stdexcept>
-#include <memory>
 
 using std::runtime_error;
-using std::unique_ptr;
 
 
 /**
@@ -39,12 +37,20 @@ public:
      */
     Stack() : first(nullptr), n(0) {}
 
+    ~Stack() {
+        while (first) {
+            auto tmp = first;
+            first = first->next;
+            delete (tmp);
+        }
+    }
+
     /**
      * Returns true if this stack is empty.
      *
      * @return true if this stack is empty; false otherwise
      */
-    bool isEmpty() {
+    bool isEmpty() const {
         return first == nullptr;
     }
 
@@ -53,7 +59,7 @@ public:
      *
      * @return the number of items in this stack
      */
-    int size() {
+    int size() const {
         return n;
     }
 
@@ -63,10 +69,9 @@ public:
      * @param  item the item to add
      */
     void push(T item) {
-        auto oldfirst = move(first);
-        first.reset(new Node());
-        first->item = item;
-        first->next = move(oldfirst);
+        auto tmp = first;
+        first = new Node(item);
+        first->next = tmp;
         n++;
     }
 
@@ -79,8 +84,10 @@ public:
     T pop() {
         if (isEmpty()) throw runtime_error("Stack underflow");
         T item = first->item;        // save item to return
-        first = move(first->next);            // delete first node
+        auto tmp = first;
+        first = first->next;            // delete first node
         n--;
+        delete (tmp);
         return item;                   // return the saved item
     }
 
@@ -98,12 +105,16 @@ public:
 private:
     class Node {
     public:
+        Node() : next(nullptr) {}
+
+        Node(T item) : item(item), next(nullptr) {}
+
         T item;
-        unique_ptr<Node> next;
+        Node *next;
     };
 
     int n;
-    unique_ptr<Node> first;
+    Node *first;
 };
 
 #endif //CH1_STACK_H

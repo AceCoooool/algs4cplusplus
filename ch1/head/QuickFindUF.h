@@ -96,7 +96,7 @@ public:
      *
      * @return the number of components (between {@code 1} and {@code n})
      */
-    int getcount() {
+    int count_() const {
         return count;
     }
 
@@ -107,7 +107,7 @@ public:
      * @return the component identifier for the component containing site {@code p}
      * @throws IllegalArgumentException unless {@code 0 <= p < n}
      */
-    int find(int p) {
+    int find(int p) const {
         validate(p);
         return id[p];
     }
@@ -122,7 +122,7 @@ public:
      * @throws IllegalArgumentException unless
      *         both {@code 0 <= p < n} and {@code 0 <= q < n}
      */
-    bool connected(int p, int q) {
+    bool connected(int p, int q) const {
         validate(p);
         validate(q);
         return id[p] == id[q];
@@ -153,7 +153,7 @@ public:
 
 private:
     // validate that p is a valid index
-    void validate(int p) {
+    void validate(int p) const {
         int n = id.size();
         if (p < 0 || p >= n) {
             throw runtime_error("index " + to_string(p) + " is not between 0 and " + to_string(n - 1));

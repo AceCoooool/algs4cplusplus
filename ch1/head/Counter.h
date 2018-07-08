@@ -24,7 +24,7 @@ public:
      * Initializes a new counter starting at 0, with the given id.
      * @param id the name of the counter
      */
-    Counter(string id) : name(id) {}
+    Counter(string id) : name(id), count(0) {}
 
     /**
      * Increments the counter by 1.
@@ -38,7 +38,7 @@ public:
      *
      * @return the current value of this counter
      */
-    int tally() {
+    int tally() const {
         return count;
     }
 
@@ -64,11 +64,12 @@ public:
 
 private:
     const string name;
-    int count = 0;
+    int count;
 };
 
 ostream &operator<<(ostream &stream, const Counter &item) {
     stream << item.count << " " << item.name;
+    return stream;
 }
 
 bool operator<(Counter &a1, Counter &a2) {

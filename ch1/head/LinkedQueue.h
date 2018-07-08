@@ -35,6 +35,15 @@ public:
      */
     LinkedQueue() : n(0), first(nullptr), last(nullptr) {}
 
+    ~LinkedQueue() {
+        while (first != last) {
+            auto tmp = first;
+            first = first->next;
+            delete (tmp);
+        }
+        delete (last);
+    }
+
     /**
      * Is this queue empty?
      * @return true if this queue is empty; false otherwise
@@ -66,12 +75,10 @@ public:
      * @param item the item to add
      */
     void enqueue(T item) {
-        Node *oldlast = last;
-        last = new Node();
-        last->item = item;
-        last->next = nullptr;
+        auto tmp = last;
+        last = new Node(item);
         if (isEmpty()) first = last;
-        else oldlast->next = last;
+        else tmp->next = last;
         n++;
     }
 
@@ -95,6 +102,10 @@ private:
     // helper linked list class
     class Node {
     public:
+        Node() : next(nullptr) {}
+
+        Node(T item) : item(item), next(nullptr) {}
+
         T item;
         Node *next;
     };

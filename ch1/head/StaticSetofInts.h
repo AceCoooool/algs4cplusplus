@@ -24,7 +24,6 @@ using std::runtime_error;
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
-
 class StaticSETofInts {
 public:
     /**
@@ -47,7 +46,7 @@ public:
      * @return the number of keys in this set less than the key (if the key is in the set)
      * or -1 (if the key is not in the set).
      */
-    int rank(int key) {
+    int rank(int key) const {
         int lo = 0, hi = a.size() - 1;
         while (lo <= hi) {
             auto mid = lo + (hi - lo) / 2;
@@ -63,7 +62,7 @@ public:
      * @param key the search key
      * @return true if the set of integers contains the key; false otherwise
      */
-    bool contains(int key) {
+    bool contains(int key) const {
         return rank(key) != -1;
     }
 

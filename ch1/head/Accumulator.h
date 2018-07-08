@@ -51,7 +51,7 @@ public:
      * Returns the mean of the data values.
      * @return the mean of the data values
      */
-    double mean() {
+    double mean() const {
         return mu;
     }
 
@@ -59,7 +59,7 @@ public:
      * Returns the sample variance of the data values.
      * @return the sample variance of the data values
      */
-    double var() {
+    double var() const {
         if (n <= 1) return numeric_limits<double>::quiet_NaN();
         return sumval / (n - 1);
     }
@@ -68,7 +68,7 @@ public:
      * Returns the sample standard deviation of the data values.
      * @return the sample standard deviation of the data values
      */
-    double stddev() {
+    double stddev() const {
         return sqrt(var());
     }
 
@@ -76,7 +76,7 @@ public:
      * Returns the number of data values.
      * @return the number of data values
      */
-    int count() {
+    int count() const {
         return n;
     }
 

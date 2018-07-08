@@ -1,8 +1,8 @@
 #ifndef CH1_INTERVAL2D_H
 #define CH1_INTERVAL2D_H
 
-#include "../head/Interval1D.h"
-#include "../head/Point2D.h"
+#include "Interval1D.h"
+#include "Point2D.h"
 
 /**
  *  The {@code Interval2D} class represents a closed two-dimensional interval,
@@ -48,7 +48,7 @@ public:
      * @return true if this two-dimensional interval contains the point p; false otherwise
      */
     bool contains(Point2D &p) {
-        return x.contains(p.getx()) && y.contains(p.gety());
+        return x.contains(p.x_()) && y.contains(p.y_());
     }
 
     /**

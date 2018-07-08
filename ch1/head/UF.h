@@ -106,7 +106,7 @@ public:
      * @return the component identifier for the component containing site {@code p}
      * @throws IllegalArgumentException unless {@code 0 <= p < n}
      */
-    int find(int p) {
+    int find(int p) const {
         validate(p);
         while (p != parent[p]) {
             parent[p] = parent[parent[p]];    // path compression by halving
@@ -120,7 +120,7 @@ public:
      *
      * @return the number of components (between {@code 1} and {@code n})
      */
-    int getcount() {
+    int count_() const {
         return count;
     }
 
@@ -134,7 +134,7 @@ public:
      * @throws IllegalArgumentException unless
      *         both {@code 0 <= p < n} and {@code 0 <= q < n}
      */
-    bool connected(int p, int q) {
+    bool connected(int p, int q) const {
         return find(p) == find(q);
     }
 
@@ -164,7 +164,7 @@ public:
 
 private:
     // validate that p is a valid index
-    void validate(int p) {
+    void validate(int p) const {
         int n = parent.size();
         if (p < 0 || p >= n) {
             throw runtime_error("index " + to_string(p) + " is not between 0 and " + to_string(n - 1));

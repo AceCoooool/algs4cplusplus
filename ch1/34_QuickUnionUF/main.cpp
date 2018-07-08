@@ -13,7 +13,7 @@ using namespace std;
  * @param args the command-line arguments
  */
 int main() {
-    fstream file("/home/ace/AceDev/C++/algorithm/ch1/data/tinyUF.txt");
+    fstream file("./data/tinyUF.txt");
     int n, p, q;
     file >> n;
     QuickUnionUF uf(n);
@@ -22,5 +22,5 @@ int main() {
         uf.union_op(p, q);
         cout << p << " " << q << endl;
     }
-    cout << uf.getcount() << " components" << endl;
+    cout << uf.count_() << " components" << endl;
 }

@@ -1,5 +1,4 @@
 #include <istream>
-#include <fstream>
 #include "../head/DoublingTest.h"
 
 using namespace std;

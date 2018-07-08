@@ -53,7 +53,7 @@ public:
      * Returns the x-coordinate.
      * @return the x-coordinate
      */
-    double getx() {
+    double x_() const{
         return x;
     }
 
@@ -61,7 +61,7 @@ public:
      * Returns the y-coordinate.
      * @return the y-coordinate
      */
-    double gety() {
+    double y_() const{
         return y;
     }
 
@@ -69,7 +69,7 @@ public:
      * Returns the polar radius of this point.
      * @return the polar radius of this point in polar coordiantes: sqrt(x*x + y*y)
      */
-    double r() {
+    double r() const{
         return sqrt(x * x + y * y);
     }
 
@@ -77,7 +77,7 @@ public:
      * Returns the angle of this point in polar coordinates.
      * @return the angle (in radians) of this point in polar coordiantes (between –&pi; and &pi;)
      */
-    double theta() {
+    double theta() const{
         return atan2(y, x);
     }
 
@@ -149,7 +149,12 @@ public:
      * @param c third point
      * @return { -1, 0, +1 } if a→b→c is a { clockwise, collinear; counterclocwise } turn.
      */
-    static int ccw(Point2D a, Point2D b, Point2D c);
+    static int ccw(Point2D &a, Point2D &b, Point2D &c) {
+        double area2 = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+        if (area2 < 0) return -1;
+        else if (area2 > 0) return +1;
+        else return 0;
+    }
 
     /**
      * Returns twice the signed area of the triangle a-b-c.
@@ -158,17 +163,25 @@ public:
      * @param c third point
      * @return twice the signed area of the triangle a-b-c
      */
-    static double area2(Point2D a, Point2D b, Point2D c);
+    static double area2(Point2D a, Point2D b, Point2D c) {
+        return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+    }
 
     // compare points according to their x-coordinate
-    static bool XOrder(Point2D &p1, Point2D &p2);
+    static bool XOrder(Point2D &p1, Point2D &p2) {
+        return p1.x < p2.x;
+    }
 
     // compare points according to their y-coordinate
-    static bool YOrder(Point2D &p1, Point2D &p2);
+    static bool YOrder(Point2D &p1, Point2D &p2) {
+        return p1.y < p2.y;
+    }
 
     // compare points according to their polar radius
-    static bool ROrder(Point2D &p1, Point2D &p2);
-
+    static bool ROrder(Point2D &p1, Point2D &p2) {
+        auto delta = (p1.x * p1.x + p1.y * p1.y) - (p2.x * p2.x + p2.y * p2.y);
+        return delta < 0;
+    }
 
 private:
     double x;
@@ -190,30 +203,6 @@ ostream &operator<<(ostream &stream, const Point2D &p) {
 
 bool operator==(const Point2D &p1, const Point2D &p2) {
     return p1.x == p2.x && p1.y == p2.y;
-}
-
-int Point2D::ccw(Point2D a, Point2D b, Point2D c) {
-    double area2 = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
-    if (area2 < 0) return -1;
-    else if (area2 > 0) return +1;
-    else return 0;
-}
-
-double Point2D::area2(Point2D a, Point2D b, Point2D c) {
-    return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
-}
-
-bool Point2D::XOrder(Point2D &p1, Point2D &p2) {
-    return p1.x < p2.x;
-}
-
-bool Point2D::YOrder(Point2D &p1, Point2D &p2) {
-    return p1.y < p2.y;
-}
-
-bool Point2D::ROrder(Point2D &p1, Point2D &p2) {
-    auto delta = (p1.x * p1.x + p1.y * p1.y) - (p2.x * p2.x + p2.y * p2.y);
-    return delta < 0;
 }
 
 

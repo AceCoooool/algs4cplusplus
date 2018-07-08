@@ -2,11 +2,9 @@
 #define CH1_RESIZINGARRAYBAG_H
 
 #include <vector>
-#include <memory>
 #include <stdexcept>
 
 using std::vector;
-using std::unique_ptr;
 using std::runtime_error;
 
 /**
@@ -32,13 +30,13 @@ public:
     /**
      * Initializes an empty bag.
      */
-    ResizingArrayBag() : n(0), a(new vector<T>(2)), length(2) {}
+    ResizingArrayBag() : n(0), a(new T[2]), length(2) {}
 
     /**
      * Is this bag empty?
      * @return true if this bag is empty; false otherwise
      */
-    bool isEmpty() {
+    bool isEmpty() const {
         return n == 0;
     }
 
@@ -46,7 +44,7 @@ public:
      * Returns the number of items in this bag.
      * @return the number of items in this bag
      */
-    int size() {
+    int size() const {
         return n;
     }
 
@@ -56,25 +54,25 @@ public:
      */
     void add(T item) {
         if (n == length) resize(2 * length);    // double size of array if necessary
-        (*a.get())[n++] = item;                 // add item
+        a[n++] = item;                          // add item
     }
 
 private:
     // an iterator
     class Iterator {
-        vector<T> data;
+        T *data;
         int pos;
         int n;
     public:
         // initial iterator
-        Iterator(vector<T> &data_, int pos_, int n_) : data(data_), pos(pos_), n(n_) {}
+        Iterator(T *data_, int pos_, int n_) : data(data_), pos(pos_), n(n_) {}
 
         // get current value
         T &operator*() { return data[pos]; }
 
         // next iterator
         Iterator &operator++() {
-            if (++pos == n)pos = 0;
+            if (++pos == n) pos = 0;
             return *this;
         }
 
@@ -84,12 +82,12 @@ private:
 
     // a const iterator
     class ConstIterator {
-        vector<T> data;
+        T* data;
         int pos;
         int n;
     public:
         // initial iterator
-        ConstIterator(vector<T> &data_, int pos_, int n_) : data(data_), pos(pos_), n(n_) {}
+        ConstIterator(T* data_, int pos_, int n_) : data(data_), pos(pos_), n(n_) {}
 
         // get current value
         const T &operator*() { return data[pos]; }
@@ -110,13 +108,13 @@ public:
      * @return an iterator that iterates over the items in the bag in arbitrary order
      */
 
-    Iterator begin() { return {*a.get(), 0, n + 1}; }
+    Iterator begin() { return {a, 0, n + 1}; }
 
-    Iterator end() { return {*a.get(), n, n + 1}; }
+    Iterator end() { return {a, n, n + 1}; }
 
-    ConstIterator begin() const { return {*a.get(), 0, n + 1}; }
+    ConstIterator begin() const { return {a, 0, n + 1}; }
 
-    ConstIterator end() const { return {*a.get(), n, n + 1}; }
+    ConstIterator end() const { return {a, n, n + 1}; }
 
 private:
     // resize the underlying array holding the elements
@@ -124,16 +122,18 @@ private:
         if (capacity < n) throw runtime_error("illegal capacity");
 
         // textbook implementation
-        auto temp = new vector<T>(capacity);
+        auto temp = new T[capacity];
         for (int i = 0; i < n; i++) {
-            (*temp)[i] = (*a.get())[i];
+            temp[i] = a[i];
         }
-        a.reset(temp);
+        auto tmp = a;
+        a = temp;
+        delete[](tmp);
         length = capacity;
     }
 
 private:
-    unique_ptr<vector<T>> a;  // array of items
+    T *a;  // array of items
     int length;               // capacity of array
     int n;                    // number of elements on stack
 };

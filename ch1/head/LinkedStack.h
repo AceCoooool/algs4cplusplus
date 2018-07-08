@@ -3,11 +3,10 @@
 
 // TODO: add iterator support
 #include <stdexcept>
-#include <memory>
+#include <vector>
 
 using std::runtime_error;
-using std::unique_ptr;
-
+using std::vector;
 
 /**
  *  The {@code LinkedStack} class represents a last-in-first-out (LIFO) stack of
@@ -36,11 +35,19 @@ public:
      */
     LinkedStack() : n(0), first(nullptr) {}
 
+    ~LinkedStack() {
+        while (first) {
+            auto tmp = first;
+            first = first->next;
+            delete (tmp);
+        }
+    }
+
     /**
      * Is this stack empty?
      * @return true if this stack is empty; false otherwise
      */
-    bool isEmpty() {
+    bool isEmpty() const {
         return first == nullptr;
     }
 
@@ -48,7 +55,7 @@ public:
      * Returns the number of items in the stack.
      * @return the number of items in the stack
      */
-    int size() {
+    int size() const {
         return n;
     }
 
@@ -57,10 +64,9 @@ public:
      * @param item the item to add
      */
     void push(T item) {
-        auto oldfirst = move(first);
-        first.reset(new Node());
-        first->item = item;
-        first->next = move(oldfirst);
+        auto tmp = first;
+        first = new Node(item);
+        first->next = tmp;
         n++;
     }
 
@@ -72,8 +78,10 @@ public:
     T pop() {
         if (isEmpty()) throw runtime_error("Stack underflow");
         T item = first->item;        // save item to return
-        first = move(first->next);            // delete first node
+        auto tmp = first;
+        first = first->next;            // delete first node
         n--;
+        delete (tmp);
         return item;                   // return the saved item
     }
 
@@ -91,13 +99,19 @@ private:
     // helper linked list class
     class Node {
     public:
+        Node() : next(nullptr) {}
+
+        Node(T item) : item(item), next(nullptr) {}
+
+//        ~Node() { if(next) delete(next); }
+
         T item;
-        unique_ptr<Node> next;
+        Node *next;
     };
 
 private:
     int n;        // size of the stack
-    unique_ptr<Node> first;   // top of stack
+    Node *first;   // top of stack
 };
 
 #endif //CH1_LINKEDSTACK_H

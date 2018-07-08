@@ -1,10 +1,6 @@
 #ifndef CH1_LINKEDBAG_H
 #define CH1_LINKEDBAG_H
 
-#include <memory>
-
-using std::unique_ptr;
-
 
 /**
  *  The {@code LinkedBag} class represents a bag (or multiset) of
@@ -30,11 +26,19 @@ public:
      */
     LinkedBag() : first(nullptr), n(0) {}
 
+    ~LinkedBag() {
+        while (first) {
+            auto tmp = first;
+            first = first->next;
+            delete (tmp);
+        }
+    }
+
     /**
      * Is this bag empty?
      * @return true if this bag is empty; false otherwise
      */
-    bool isEmpty() {
+    bool isEmpty() const {
         return first == nullptr;
     }
 
@@ -42,7 +46,7 @@ public:
      * Returns the number of items in this bag.
      * @return the number of items in this bag
      */
-    int size() {
+    int size() const {
         return n;
     }
 
@@ -51,36 +55,39 @@ public:
      * @param item the item to add to this bag
      */
     void add(T item) {
-        auto oldfirst = move(first);
-        first.reset(new Node());
-        first->item = item;
-        first->next = move(oldfirst);
+        auto tmp = first;
+        first = new Node(item);
+        first->next = tmp;
         n++;
     }
 
 private:
     class Node {
     public:
+        Node() : next(nullptr) {}
+
+        Node(T item) : item(item), next(nullptr) {}
+
         T item;
-        unique_ptr<Node> next;
+        Node *next;
     };
 
     // an iterator
     class Iterator {
-        unique_ptr<Node> data;
+        Node *data;
         int pos;
         int n;
     public:
         // initial iterator
-        Iterator(Node *data_, int pos_, int n_) : pos(pos_), n(n_) { data.reset(data_); }
+        Iterator(Node *data_, int pos_, int n_) : pos(pos_), n(n_), data(data_) {}
 
         // get current value
-        T &operator*() { return data.get()->item; }
+        T &operator*() { return data->item; }
 
         // next iterator
         Iterator &operator++() {
             if (++pos == n)pos = 0;
-            data = move(data->next);
+            data = data->next;
             return *this;
         }
 
@@ -90,22 +97,20 @@ private:
 
     // a const iterator
     class ConstIterator {
-        unique_ptr<Node> data;
+        Node *data;
         int pos;
         int n;
     public:
         // initial iterator
-        ConstIterator(Node *data_, int pos_, int n_) : pos(pos_), n(n_) {
-            data.reset(data_);
-        }
+        ConstIterator(Node *data_, int pos_, int n_) : pos(pos_), n(n_), data(data_) {}
 
         // get current value
-        const T &operator*() { return data.get()->item; }
+        const T &operator*() { return data->item; }
 
         // next iterator
         ConstIterator &operator++() {
             if (++pos == n)pos = 0;
-            data = move(data->next);
+            data = data->next;
             return *this;
         }
 
@@ -119,17 +124,17 @@ public:
      * @return an iterator that iterates over the items in the bag in arbitrary order
      */
 
-    Iterator begin() { return {first.get(), 0, n + 1}; }
+    Iterator begin() { return {first, 0, n + 1}; }
 
     Iterator end() { return {nullptr, n, n + 1}; }
 
-    ConstIterator begin() const { return {first.get(), 0, n + 1}; }
+    ConstIterator begin() const { return {first, 0, n + 1}; }
 
     ConstIterator end() const { return {nullptr, n, n + 1}; }
 
 private:
     int n;     // number of elements in bag
-    unique_ptr<Node> first;    // beginning of bag
+    Node *first;    // beginning of bag
 
 };
 

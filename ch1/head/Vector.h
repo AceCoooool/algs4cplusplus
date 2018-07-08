@@ -34,9 +34,7 @@ public:
      *
      * @param d the dimension of the vector
      */
-    Vector(int d) : d(d) {
-        data.resize(d);
-    }
+    Vector(int d) : d(d), data(d, 0) {}
 
     /**
      * Initializes a vector from either an array or a vararg list.
@@ -53,7 +51,7 @@ public:
      *
      * @return the dimension of this vector
      */
-    int dimension() { return d; }
+    int dimension() const { return d; }
 
     /**
      * Returns the do product of this vector with the specified vector.
@@ -62,8 +60,7 @@ public:
      * @return the dot product of this vector and that vector
      * @throws IllegalArgumentException if the dimensions of the two vectors are not equal
      */
-
-    double dot(Vector &that) {
+    double dot(const Vector &that) {
         if (d != that.d) throw runtime_error("Dimension don't agree");
         double sum = 0.0;
         for (int i = 0; i < d; ++i)
@@ -88,7 +85,7 @@ public:
      * @return the Euclidean distance between this vector and that vector
      * @throws IllegalArgumentException if the dimensions of the two vectors are not equal
      */
-    double distanceTo(Vector that) {
+    double distanceTo(const Vector &that) {
         if (d != that.d) throw runtime_error("Dimensions don't agree");
         return minus(that).magnitude();
     }
@@ -100,7 +97,7 @@ public:
      * @return the vector whose value is {@code (this + that)}
      * @throws IllegalArgumentException if the dimensions of the two vectors are not equal
      */
-    Vector plus(Vector &that) {
+    Vector plus(const Vector &that) {
         if (d != that.d) throw runtime_error("Dimensions don't agree");
         Vector c(d);
         for (int i = 0; i < d; i++)
@@ -115,7 +112,7 @@ public:
      * @return the vector whose value is {@code (this - that)}
      * @throws IllegalArgumentException if the dimensions of the two vectors are not equal
      */
-    Vector minus(Vector &that) {
+    Vector minus(const Vector &that) {
         if (d != that.d) throw runtime_error("Dimensions don't agree");
         Vector c(d);
         for (int i = 0; i < d; i++)
@@ -129,7 +126,7 @@ public:
      * @param  i the coordinate index
      * @return the ith cartesian coordinate
      */
-    double cartesian(int i) {
+    double cartesian(int i) const {
         return data[i];
     }
 

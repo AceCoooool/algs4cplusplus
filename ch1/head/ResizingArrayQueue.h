@@ -3,11 +3,9 @@
 
 // TODO: add iterator support
 #include <vector>
-#include <memory>
 #include <stdexcept>
 
 using std::vector;
-using std::unique_ptr;
 using std::runtime_error;
 
 /**
@@ -36,7 +34,9 @@ public:
     /**
      * Initializes an empty queue.
      */
-    ResizingArrayQueue() : q(new vector<T>(2)), n(0), first(0), last(0), length(2) {}
+    ResizingArrayQueue() : q(new T[2]), n(0), first(0), last(0), length(2) {}
+
+    ~ResizingArrayQueue() { delete[](q); }
 
     /**
      * Is this queue empty?
@@ -61,7 +61,7 @@ public:
     void enqueue(T item) {
         // double size of array if necessary and recopy to front of array
         if (n == length) resize(2 * length);   // double size of array if necessary
-        (*q.get())[last++] = item;             // add item
+        q[last++] = item;             // add item
         if (last == length) last = 0;          // wrap-around
         n++;
     }
@@ -73,7 +73,7 @@ public:
      */
     T dequeue() {
         if (isEmpty()) throw runtime_error("Queue underflow");
-        T item = (*q.get())[first];
+        T item = q[first];
         n--;
         first++;
         if (first == length) first = 0;           // wrap-around
@@ -89,7 +89,7 @@ public:
      */
     T peek() {
         if (isEmpty()) throw runtime_error("Queue underflow");
-        return (*q.get())[first];
+        return q[first];
     }
 
 
@@ -97,19 +97,20 @@ private:
     // resize the underlying array
     void resize(int capacity) {
         if (capacity < n) throw runtime_error("illegal capacity");
-        vector<T> *tmp = new vector<T>(capacity);
+        auto tmp = new T[capacity];
         for (int i = 0; i < n; i++) {
-            (*tmp)[i] = (*q.get())[(first + i) % length];
+            tmp[i] = q[(first + i) % length];
         }
-        q.reset(tmp);
+        auto temp = q;
+        q = tmp;
+        delete[] (temp);
         first = 0;
         last = n;
         length = capacity;
     }
 
-
 private:
-    unique_ptr<vector<T>> q;  // queue elements
+    T *q;  // queue elements
     int length;               // capacity of q
     int n;                    // number of elements on queue
     int first;                // index of first element of queue

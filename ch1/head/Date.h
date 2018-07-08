@@ -44,8 +44,8 @@ public:
      * @param year the year
      * @throws IllegalArgumentException if this date is invalid
      */
-    Date(int m, int d, int y) : month_(m), day_(d), year_(y) {
-        if (!isValid(month_, day_, year_))
+    Date(int m, int d, int y) : month(m), day(d), year(y) {
+        if (!isValid(month, day, year))
             throw runtime_error("Invalid date");
     }
 
@@ -58,35 +58,37 @@ public:
         vector<string> fields = split(date, '/');
         if (fields.size() != 3)
             throw runtime_error("Invalid data");
-        month_ = stoi(fields[0]);
-        day_ = stoi(fields[1]);
-        year_ = stoi(fields[2]);
-        if (!isValid(month_, day_, year_))
+        month = stoi(fields[0]);
+        day = stoi(fields[1]);
+        year = stoi(fields[2]);
+        if (!isValid(month, day, year))
             throw runtime_error("Invalid data");
     }
+
+    Date(const Date &date) : month(date.month), year(date.year), day(date.day) {}
 
     /**
      * Return the month.
      * @return the month (an integer between 1 and 12)
      */
-    int month() {
-        return month_;
+    int month_() const {
+        return month;
     }
 
     /**
      * Returns the day.
      * @return the day (an integer between 1 and 31)
      */
-    int day() {
-        return day_;
+    int day_() const {
+        return day;
     }
 
     /**
      * Returns the year.
      * @return the year
      */
-    int year() {
-        return year_;
+    int year_() {
+        return year;
     }
 
     /**
@@ -95,9 +97,9 @@ public:
      * @return a date that represents the next day after this day
      */
     Date next() {
-        if (isValid(month_, day_ + 1, year_)) return Date(month_, day_ + 1, year_);
-        else if (isValid(month_ + 1, 1, year_)) return Date(month_ + 1, 1, year_);
-        else return Date(1, 1, year_ + 1);
+        if (isValid(month, day + 1, year)) return Date(month, day + 1, year);
+        else if (isValid(month + 1, 1, year)) return Date(month + 1, 1, year);
+        else return Date(1, 1, year + 1);
     }
 
     /**
@@ -106,7 +108,7 @@ public:
      * @param  that the other date
      * @return {@code true} if this date is after that date; {@code false} otherwise
      */
-    bool isAfter(Date that) {
+    bool isAfter(const Date &that) {
         return compareTo(that) > 0;
     }
 
@@ -153,21 +155,21 @@ private:
     *         the argument date; and a positive ineger if this date is chronologically
     *         after the argument date
     */
-    int compareTo(Date &that) {
-        if (year_ < that.year_) return -1;
-        if (year_ > that.year_) return +1;
-        if (month_ < that.month_) return -1;
-        if (month_ > that.month_) return +1;
-        if (day_ < that.day_) return -1;
-        if (day_ > that.day_) return +1;
+    int compareTo(const Date &that) {
+        if (year < that.year) return -1;
+        if (year > that.year) return +1;
+        if (month < that.month) return -1;
+        if (month > that.month) return +1;
+        if (day < that.day) return -1;
+        if (day > that.day) return +1;
         return 0;
     }
 
 private:
     const static vector<int> DAYS;
-    int month_;   // month (between 1 and 12)
-    int day_;     // day   (between 1 and DAYS[month]
-    int year_;    // year
+    int month;   // month (between 1 and 12)
+    int day;     // day   (between 1 and DAYS[month]
+    int year;    // year
 };
 
 const vector<int> Date::DAYS = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -178,7 +180,7 @@ const vector<int> Date::DAYS = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 3
  * @return the string representation in the format MM/DD/YYYY
  */
 ostream &operator<<(ostream &stream, const Date &item) {
-    stream << item.month_ << "/" << item.day_ << "/" << item.year_;
+    stream << item.month << "/" << item.day << "/" << item.year;
 }
 
 /**
@@ -188,16 +190,16 @@ ostream &operator<<(ostream &stream, const Date &item) {
  * @return {@code true} if this date equals {@code other}; {@code false} otherwise
  */
 bool operator==(const Date &d1, const Date &d2) {
-    return (d1.month_ == d2.month_) && (d1.day_ == d2.day_) && (d1.year_ == d2.year_);
+    return (d1.month == d2.month) && (d1.day == d2.day) && (d1.year == d2.year);
 }
 
 bool operator<(const Date &d1, const Date &d2) {
-    if (d1.year_ < d2.year_) return true;
-    if (d1.year_ > d2.year_) return false;
-    if (d1.month_ < d2.month_) return true;
-    if (d1.month_ > d2.month_) return false;
-    if (d1.day_ < d2.day_) return true;
-    if (d1.day_ > d2.day_) return false;
+    if (d1.year < d2.year) return true;
+    if (d1.year > d2.year) return false;
+    if (d1.month < d2.month) return true;
+    if (d1.month > d2.month) return false;
+    if (d1.day < d2.day) return true;
+    if (d1.day > d2.day) return false;
     return false;
 }
 

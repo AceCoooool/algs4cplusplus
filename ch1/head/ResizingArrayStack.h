@@ -4,9 +4,7 @@
 // TODO: add iterator support
 #include <vector>
 #include <stdexcept>
-#include <memory>
 
-using std::unique_ptr;
 using std::runtime_error;
 using std::vector;
 
@@ -36,13 +34,15 @@ public:
     /**
      * Initializes an empty stack.
      */
-    ResizingArrayStack() : n(0), a(new vector<T>(2)) {}
+    ResizingArrayStack() : n(0), a(new T[2]()) {}
+
+    ~ResizingArrayStack() { delete[] (a); }
 
     /**
      * Is this stack empty?
      * @return true if this stack is empty; false otherwise
      */
-    bool isEmpty() {
+    bool isEmpty() const {
         return n == 0;
     }
 
@@ -50,7 +50,7 @@ public:
      * Returns the number of items in the stack.
      * @return the number of items in the stack
      */
-    int size() {
+    int size() const {
         return n;
     }
 
@@ -60,7 +60,7 @@ public:
      */
     void push(T item) {
         if (n == length) resize(2 * length);    // double size of array if necessary
-        (*a.get())[n++] = item;                            // add item
+        a[n++] = item;                            // add item
     }
 
     /**
@@ -70,7 +70,7 @@ public:
      */
     T pop() {
         if (isEmpty()) throw runtime_error("Stack underflow");
-        T item = (*a.get())[n - 1];
+        T item = a[n - 1];
         n--;
         // shrink size of array if necessary
         if (n > 0 && n == length / 4) resize(length / 2);
@@ -84,9 +84,8 @@ public:
      */
     T peek() {
         if (isEmpty()) throw runtime_error("Stack underflow");
-        return (*a.get())[n - 1];
+        return a[n - 1];
     }
-
 
 private:
     // resize the underlying array holding the elements
@@ -94,16 +93,18 @@ private:
         if (capacity < n) throw runtime_error("illegal capacity");
 
         // textbook implementation
-        auto temp = new vector<T>(capacity);
+        auto temp = new T[capacity]();
         for (int i = 0; i < n; i++) {
-            (*temp)[i] = (*a.get())[i];
+            temp[i] = a[i];
         }
-        a.reset(temp);
+        auto tmp = a;
+        a = temp;
+        delete[](tmp);
         length = capacity;
     }
 
 private:
-    unique_ptr<vector<T>> a;
+    T *a;
     int length = 2;
     int n;          // number of elements on stack
 };

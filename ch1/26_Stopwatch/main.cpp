@@ -4,7 +4,11 @@
 
 using namespace std;
 
-
+/**
+ * Unit tests the {@code Bag} data type.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
     int n = 10000;
     // sum of square roots of integers from 1 to n using Math.sqrt(x).

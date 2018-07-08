@@ -39,8 +39,8 @@ public:
      *         is {@code Double.NaN}, {@code Double.POSITIVE_INFINITY},
      *         or {@code Double.NEGATIVE_INFINITY}
      */
-    Transaction(string who_, Date when_, double amount_) : who(who_), when(make_unique<Date>(when_)),
-                                                           amount(amount_) {
+    Transaction(string who, Date when, double amount) : who(who), when(make_unique<Date>(when)),
+                                                        amount(amount) {
         if (isnan(amount) || isinf(amount))
             throw runtime_error("Amount cannot be Nan or infinite");
     }
@@ -68,7 +68,7 @@ public:
      *
      * @return the name of the customer involved in this transaction
      */
-    string getwho() {
+    string who_() {
         return who;
     }
 
@@ -78,8 +78,8 @@ public:
      * @return the date of this transaction
      */
     // TODO: modify to a more elegant form
-    unique_ptr<Date> getwhen() {
-        return make_unique<Date>(when->month(), when->day(), when->year());
+    unique_ptr<Date> when_() {
+        return make_unique<Date>(when->month_(), when->day_(), when->year_());
     }
 
     /**
@@ -87,7 +87,7 @@ public:
      *
      * @return the amount of this transaction
      */
-    double getamount() {
+    double amount_() {
         return amount;
     }
 
