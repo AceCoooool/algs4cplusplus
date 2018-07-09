@@ -18,6 +18,9 @@ add_subdirectory(11_TST)
 add_subdirectory(12_KMP)
 add_subdirectory(13_BoyerMoore)
 add_subdirectory(14_RabinKarp)
+add_subdirectory(15_NFA)
+add_subdirectory(16_GREP)
+add_subdirectory(17_BinaryDump)
 
 
-add_subdirectory(temp)
+# add_subdirectory(temp)

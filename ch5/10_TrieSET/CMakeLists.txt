@@ -3,5 +3,5 @@ project(10_TrieSET)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES main.cpp ../head/LSD.h ../head/MSD.h ../head/TST.h ../head/AmericanFlag.h ../head/AmericanFlagX.h ../head/KMP.h ../head/BoyerMoore.h ../head/RabinKarp.h)
+set(SOURCE_FILES main.cpp ../head/LSD.h ../head/MSD.h ../head/TST.h ../head/AmericanFlag.h ../head/AmericanFlagX.h ../head/KMP.h ../head/BoyerMoore.h ../head/RabinKarp.h ../head/NFA.h)
 add_executable(10_TrieSET ${SOURCE_FILES})
