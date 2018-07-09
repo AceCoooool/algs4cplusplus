@@ -4,8 +4,14 @@
 
 using namespace std;
 
+/**
+ * Reads in a sequence of strings from standard input; bottom-up
+ * mergesorts them; and prints them to standard output in ascending order.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
-    ifstream file("/home/ace/AceDev/C++/algorithm/ch2/data/words3.txt");
+    ifstream file("./data/words3.txt");
     string tmp;
     vector<string> vec;
     while (file >> tmp) {

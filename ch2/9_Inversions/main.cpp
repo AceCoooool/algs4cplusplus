@@ -1,18 +1,16 @@
-// TODO: un-finish
+#include <iostream>
+#include <fstream>
+#include "../head/Inversions.h"
 
-//#include <iostream>
-//#include <fstream>
-//#include "../head/MergeX.h"
-//
-//using namespace std;
-//
-//int main() {
-//    ifstream file("/home/ace/AceDev/C++/algorithm/ch2/data/words3.txt");
-//    string tmp;
-//    vector<string> vec;
-//    while (file >> tmp) {
-//        vec.push_back(tmp);
-//    }
-//    MergeX::sort(vec);
-//    MergeX::show(vec);
-//}
+using namespace std;
+
+/**
+ * Reads a sequence of integers from standard input and
+ * prints the number of inversions to standard output.
+ *
+ * @param args the command-line arguments
+ */
+int main() {
+    vector<int> a{2, 4, 1, 6, 3};
+    cout << Inversions::count(a) << endl;
+}

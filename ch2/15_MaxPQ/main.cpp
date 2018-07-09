@@ -4,9 +4,14 @@
 
 using namespace std;
 
+/**
+ * Unit tests the {@code MaxPQ} data type.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
     MaxPQ<string> pq;
-    fstream file("/home/ace/AceDev/C++/algorithm/ch2/data/tinyPQ.txt");
+    fstream file("./data/tinyPQ.txt");
     string tmp;
     while (file >> tmp) {
         if (tmp != "-") pq.insert(tmp);

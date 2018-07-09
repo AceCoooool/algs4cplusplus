@@ -6,15 +6,13 @@
 using namespace std;
 
 /**
- *  Reads sorted text files specified as command-line arguments;
- *  merges them together into a sorted output; and writes
- *  the results to standard output.
- *  Note: this client does not check that the input files are sorted.
+ * Reads in a sequence of strings from standard input; heapsorts them;
+ * and prints them to standard output in ascending order.
  *
  * @param args the command-line arguments
  */
 int main() {
-    fstream file("/home/ace/AceDev/C++/algorithm/ch2/data/tiny.txt");
+    fstream file("./data/tiny.txt");
     string tmp;
     vector<string> vec;
     while (file >> tmp)

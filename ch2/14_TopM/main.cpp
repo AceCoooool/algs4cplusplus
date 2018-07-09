@@ -23,7 +23,7 @@ int main() {
     int m = 5;
     auto f = [](Transaction &a1, Transaction &a2) { return a1.getamount() > a2.getamount(); };
     MinPQ<Transaction> pq(f);
-    fstream file("/home/ace/AceDev/C++/algorithm/ch2/data/tinyBatch.txt");
+    fstream file("./data/tinyBatch.txt");
     string tmp;
     while (getline(file, tmp)) {
         // Create an entry from the next line and put on the PQ.

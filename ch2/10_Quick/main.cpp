@@ -4,8 +4,16 @@
 
 using namespace std;
 
+/**
+ * Reads in a sequence of strings from standard input; quicksorts them; 
+ * and prints them to standard output in ascending order. 
+ * Shuffles the array and then prints the strings again to
+ * standard output, but this time, using the select method.
+ *
+ * @param args the command-line arguments
+ */
 int main() {
-    ifstream file("/home/ace/AceDev/C++/algorithm/ch2/data/tiny.txt");
+    ifstream file("./data/tiny.txt");
     string tmp;
     vector<string> vec;
     while (file >> tmp) {

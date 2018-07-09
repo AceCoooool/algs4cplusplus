@@ -9,7 +9,7 @@ mt19937 g(rd());
 uniform_real_distribution<double> dis(0, 1);
 
 /**
- * Unit tests the {@code IndexMinPQ} data type.
+ * Unit tests the {@code IndexMaxPQ} data type.
  *
  * @param args the command-line arguments
  */

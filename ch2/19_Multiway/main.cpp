@@ -14,9 +14,9 @@ using namespace std;
  * @param args the command-line arguments
  */
 int main() {
-    vector<string> files{"/home/ace/AceDev/C++/algorithm/ch2/data/m1.txt",
-                         "/home/ace/AceDev/C++/algorithm/ch2/data/m2.txt",
-                         "/home/ace/AceDev/C++/algorithm/ch2/data/m1.txt"};
+    vector<string> files{"./data/m1.txt",
+                         "./data/m2.txt",
+                         "./data/m3.txt"};
     vector<fstream> streams;
     for (auto f: files)
         streams.push_back(fstream(f));

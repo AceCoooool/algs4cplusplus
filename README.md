@@ -3,15 +3,13 @@ Algorithms, 4th edition textbook code (using c++)
 
 **Note：**
 
-**（the code can run, but may not well --- I will modify these in the next cycle）**
-
 1. based on STL Library
 2. using C++14
 3. **Not support** drawing
 4. **Bug: ** ① const object (many member function forget to add const) 
 4. Welcome to point out the error, and pull better code
 
-## How to run demo
+## Tutorial: run demo code
 
 ### terminal
 
