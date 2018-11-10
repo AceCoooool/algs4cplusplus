@@ -1,13 +1,23 @@
 # Algorithms
 Algorithms, 4th edition textbook code (using c++)
 
+> official java code: [Algorithms, 4th Edition](https://algs4.cs.princeton.edu/home/)
+
 **Note：**
 
 1. based on STL Library
-2. using C++14
+2. using C++17
 3. **Not support** drawing
-4. **Bug: ** ① const object (many member function forget to add const) 
 4. Welcome to point out the error, and pull better code
+
+### TODO
+
+- [ ] check ch1
+- [ ] check ch2
+- [ ] check ch3
+- [ ] check ch4
+- [ ] check ch5
+- [ ] add ch6
 
 ## Tutorial: run demo code
 
