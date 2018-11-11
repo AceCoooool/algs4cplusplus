@@ -36,6 +36,19 @@ auto split = [](string s, char delim) {
  *  @author Kevin Wayne
  */
 class Date {
+private:
+    const static vector<int> DAYS;
+    int month;   // month (between 1 and 12)
+    int day;     // day   (between 1 and DAYS[month]
+    int year;    // year
+
+public:
+    // some friend function
+    friend ostream &operator<<(ostream &stream, const Date &item);
+    friend bool operator==(const Date &d1, const Date &d2);
+    friend bool operator<(const Date &d1, const Date &d2);
+    friend bool operator>(const Date &d1, const Date &d2);
+
 public:
     /**
      * Initializes a new date from the month, day, and year.
@@ -54,7 +67,7 @@ public:
      * @param date the string representation of this date
      * @throws IllegalArgumentException if this date is invalid
      */
-    Date(string date) {
+    explicit Date(string date) {
         vector<string> fields = split(date, '/');
         if (fields.size() != 3)
             throw runtime_error("Invalid data");
@@ -71,7 +84,7 @@ public:
      * Return the month.
      * @return the month (an integer between 1 and 12)
      */
-    int month_() const {
+    int month_() const noexcept {
         return month;
     }
 
@@ -79,7 +92,7 @@ public:
      * Returns the day.
      * @return the day (an integer between 1 and 31)
      */
-    int day_() const {
+    int day_() const noexcept {
         return day;
     }
 
@@ -87,7 +100,7 @@ public:
      * Returns the year.
      * @return the year
      */
-    int year_() {
+    int year_() const noexcept {
         return year;
     }
 
@@ -102,14 +115,15 @@ public:
         else return Date(1, 1, year + 1);
     }
 
+
     /**
      * Compares two dates chronologically.
      *
      * @param  that the other date
      * @return {@code true} if this date is after that date; {@code false} otherwise
      */
-    bool isAfter(const Date &that) {
-        return compareTo(that) > 0;
+    bool isAfter(const Date &that) const {
+        return (*this) > that;
     }
 
     /**
@@ -118,17 +132,9 @@ public:
      * @param  that the other date
      * @return {@code true} if this date is before that date; {@code false} otherwise
      */
-    bool isBefore(Date that) {
-        return compareTo(that) < 0;
+    bool isBefore(const Date &that) const {
+        return (*this) < that;
     }
-
-    // 输入输出运算符为非成员函数
-    friend ostream &operator<<(ostream &stream, const Date &item);
-
-    // 算术和关系运算符一般也定义成非成员函数
-    friend bool operator==(const Date &d1, const Date &d2);
-
-    friend bool operator<(const Date &d1, const Date &d2);
 
 
 private:
@@ -147,29 +153,6 @@ private:
         return y % 4 == 0;
     }
 
-    /**
-    * Compares two dates chronologically.
-    *
-    * @return the value {@code 0} if the argument date is equal to this date;
-    *         a negative integer if this date is chronologically less than
-    *         the argument date; and a positive ineger if this date is chronologically
-    *         after the argument date
-    */
-    int compareTo(const Date &that) {
-        if (year < that.year) return -1;
-        if (year > that.year) return +1;
-        if (month < that.month) return -1;
-        if (month > that.month) return +1;
-        if (day < that.day) return -1;
-        if (day > that.day) return +1;
-        return 0;
-    }
-
-private:
-    const static vector<int> DAYS;
-    int month;   // month (between 1 and 12)
-    int day;     // day   (between 1 and DAYS[month]
-    int year;    // year
 };
 
 const vector<int> Date::DAYS = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -193,6 +176,14 @@ bool operator==(const Date &d1, const Date &d2) {
     return (d1.month == d2.month) && (d1.day == d2.day) && (d1.year == d2.year);
 }
 
+/**
+ * Compares two dates chronologically.
+ *
+ * @return the value {@code 0} if the argument date is equal to this date;
+ *         a negative integer if this date is chronologically less than
+ *         the argument date; and a positive ineger if this date is chronologically
+ *         after the argument date
+ */
 bool operator<(const Date &d1, const Date &d2) {
     if (d1.year < d2.year) return true;
     if (d1.year > d2.year) return false;
@@ -200,6 +191,16 @@ bool operator<(const Date &d1, const Date &d2) {
     if (d1.month > d2.month) return false;
     if (d1.day < d2.day) return true;
     if (d1.day > d2.day) return false;
+    return false;
+}
+
+bool operator>(const Date &d1, const Date &d2) {
+    if (d1.year > d2.year) return true;
+    if (d1.year < d2.year) return false;
+    if (d1.month > d2.month) return true;
+    if (d1.month < d2.month) return false;
+    if (d1.day > d2.day) return true;
+    if (d1.day < d2.day) return false;
     return false;
 }
 

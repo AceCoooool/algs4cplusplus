@@ -18,6 +18,8 @@ int main() {
     cout << "Unsorted: " << endl;
     for (auto a: vec)
         cout << a << endl;
+    cout << endl;
+
     cout << "sorted with x: " << endl;
     sort(vec.begin(), vec.end(), Point2D::XOrder);
     for (auto a: vec)

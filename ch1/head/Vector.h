@@ -46,12 +46,13 @@ public:
      */
     Vector(vector<double> arr) : d(arr.size()), data(arr) {}
 
+
     /**
      * Returns the dimension of this vector.
      *
      * @return the dimension of this vector
      */
-    int dimension() const { return d; }
+    int dimension() const noexcept { return d; }
 
     /**
      * Returns the do product of this vector with the specified vector.
@@ -126,7 +127,7 @@ public:
      * @param  i the coordinate index
      * @return the ith cartesian coordinate
      */
-    double cartesian(int i) const {
+    double cartesian(int i) const noexcept {
         return data[i];
     }
 

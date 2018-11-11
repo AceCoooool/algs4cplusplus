@@ -28,6 +28,10 @@ using std::ostream;
  *  @author Kevin Wayne
  */
 class Point2D {
+private:
+    double x;   // x coordinate
+    double y;   // y coordinate
+
 public:
     /**
      * Initializes a new point (x, y).
@@ -42,18 +46,15 @@ public:
             throw runtime_error("Coordinates must be finite");
         if (isnan(x_) || isnan(y_))
             throw runtime_error("Coordinates cannot be NaN");
-        if (x_ == 0.0) x = 0.0;  // convert -0.0 to +0.0
-        else x = x_;
-
-        if (y_ == 0.0) y = 0.0;  // convert -0.0 to +0.0
-        else y = y_;
+        x = x_;
+        y = y_;
     }
 
     /**
      * Returns the x-coordinate.
      * @return the x-coordinate
      */
-    double x_() const{
+    double x_() const {
         return x;
     }
 
@@ -61,7 +62,7 @@ public:
      * Returns the y-coordinate.
      * @return the y-coordinate
      */
-    double y_() const{
+    double y_() const {
         return y;
     }
 
@@ -69,7 +70,7 @@ public:
      * Returns the polar radius of this point.
      * @return the polar radius of this point in polar coordiantes: sqrt(x*x + y*y)
      */
-    double r() const{
+    double r() const {
         return sqrt(x * x + y * y);
     }
 
@@ -77,7 +78,7 @@ public:
      * Returns the angle of this point in polar coordinates.
      * @return the angle (in radians) of this point in polar coordiantes (between –&pi; and &pi;)
      */
-    double theta() const{
+    double theta() const {
         return atan2(y, x);
     }
 
@@ -85,7 +86,7 @@ public:
      * Returns the angle between this point and that point.
      * @return the angle in radians (between –&pi; and &pi;) between this point and that point (0 if equal)
      */
-    double angleTo(Point2D that) {
+    double angleTo(const Point2D &that) {
         double dx = that.x - x;
         double dy = that.y - y;
         return atan2(dy, dx);
@@ -96,7 +97,7 @@ public:
      * @param that the other point
      * @return the Euclidean distance between this point and that point
      */
-    double distanceTo(Point2D that) {
+    double distanceTo(const Point2D &that) {
         double dx = x - that.x;
         double dy = y - that.y;
         return sqrt(dx * dx + dy * dy);
@@ -107,7 +108,7 @@ public:
      * @param that the other point
      * @return the square of the Euclidean distance between this point and that point
      */
-    double distanceSquaredTo(Point2D that) {
+    double distanceSquaredTo(const Point2D &that) {
         double dx = x - that.x;
         double dy = y - that.y;
         return dx * dx + dy * dy;
@@ -149,7 +150,7 @@ public:
      * @param c third point
      * @return { -1, 0, +1 } if a→b→c is a { clockwise, collinear; counterclocwise } turn.
      */
-    static int ccw(Point2D &a, Point2D &b, Point2D &c) {
+    static int ccw(const Point2D &a, const Point2D &b, const Point2D &c) {
         double area2 = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
         if (area2 < 0) return -1;
         else if (area2 > 0) return +1;
@@ -163,29 +164,25 @@ public:
      * @param c third point
      * @return twice the signed area of the triangle a-b-c
      */
-    static double area2(Point2D a, Point2D b, Point2D c) {
+    static double area2(const Point2D &a, const Point2D &b, const Point2D &c) {
         return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
     }
 
     // compare points according to their x-coordinate
-    static bool XOrder(Point2D &p1, Point2D &p2) {
+    static bool XOrder(const Point2D &p1, const Point2D &p2) {
         return p1.x < p2.x;
     }
 
     // compare points according to their y-coordinate
-    static bool YOrder(Point2D &p1, Point2D &p2) {
+    static bool YOrder(const Point2D &p1, const Point2D &p2) {
         return p1.y < p2.y;
     }
 
     // compare points according to their polar radius
-    static bool ROrder(Point2D &p1, Point2D &p2) {
+    static bool ROrder(const Point2D &p1, const Point2D &p2) {
         auto delta = (p1.x * p1.x + p1.y * p1.y) - (p2.x * p2.x + p2.y * p2.y);
         return delta < 0;
     }
-
-private:
-    double x;
-    double y;
 };
 
 bool operator<(const Point2D &p1, const Point2D &p2) {

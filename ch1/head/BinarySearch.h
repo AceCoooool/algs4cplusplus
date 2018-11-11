@@ -20,6 +20,10 @@ using std::vector;
 class BinarySearch {
 public:
     /**
+     * This class should not be instantiated.
+     */
+    BinarySearch() = delete;
+    /**
     * Returns the index of the specified key in the specified array.
     *
     * @param  a the array of integers, must be sorted in ascending order

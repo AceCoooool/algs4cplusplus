@@ -30,6 +30,7 @@ std::mt19937 gen(rd());
  */
 class Knuth {
 public:
+    // this class should not be instantiated
     Knuth() = delete;
 
     /**

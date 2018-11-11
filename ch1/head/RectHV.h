@@ -17,6 +17,10 @@
  *  @author Kevin Wayne
  */
 class RectHV {
+private:
+    double xmin, ymin;  // minimum x- and y-coordinates
+    double xmax, ymax;  // maximum x- and y-coordinates
+
 public:
     /**
      * Initializes a new rectangle [<em>xmin</em>, <em>xmax</em>]
@@ -85,7 +89,7 @@ public:
      *
      * @return the height of this rectangle {@code ymax - ymin}
      */
-    double height() const{
+    double height() const {
         return ymax - ymin;
     }
 
@@ -99,7 +103,7 @@ public:
      * @return {@code true} if this rectangle intersect the argument
                rectangle at one or more points
      */
-    bool intersects(const RectHV &that) {
+    bool intersects(const RectHV &that) const {
         return xmax >= that.xmin && ymax >= that.ymin
                && that.xmax >= xmin && that.ymax >= ymin;
     }
@@ -110,7 +114,7 @@ public:
      * @return {@code true} if this rectangle contain the point {@code p},
                possibly at the boundary; {@code false} otherwise
      */
-    bool contains(const Point2D &p) {
+    bool contains(const Point2D &p) const {
         return (p.x_() >= xmin) && (p.x_() <= xmax)
                && (p.y_() >= ymin) && (p.y_() <= ymax);
     }
@@ -123,7 +127,7 @@ public:
      *         the closest point on this rectangle; 0 if the point is contained
      *         in this rectangle
      */
-    double distanceSquaredTo(const Point2D &p) {
+    double distanceSquaredTo(const Point2D &p) const {
         double dx = 0.0, dy = 0.0;
         if (p.x_() < xmin) dx = p.x_() - xmin;
         else if (p.x_() > xmax) dx = p.x_() - xmax;
@@ -139,7 +143,7 @@ public:
      * @return the Euclidean distance between the point {@code p} and the closest point
                on this rectangle; 0 if the point is contained in this rectangle
      */
-    double distanceTo(const Point2D &p) {
+    double distanceTo(const Point2D &p) const {
         return sqrt(distanceSquaredTo(p));
     }
 
@@ -159,10 +163,6 @@ public:
      *         {@code [xmin, xmax] x [ymin, ymax]}
      */
     friend ostream &operator<<(ostream &stream, const RectHV &r);
-
-private:
-    double xmin, ymin;  // minimum x- and y-coordinates
-    double xmax, ymax;  // maximum x- and y-coordinates
 };
 
 bool operator==(const RectHV &r1, const RectHV &r2) {

@@ -13,8 +13,6 @@ using std::string;
 using std::stod;
 using std::isnan;
 using std::isinf;
-using std::unique_ptr;
-using std::make_unique;
 
 /**
  *  The {@code Transaction} class is an immutable data type to encapsulate a
@@ -28,6 +26,11 @@ using std::make_unique;
  *  @author Kevin Wayne
  */
 class Transaction {
+private:
+    string who;             // customer
+    Date *when;             // date
+    double amount;          // amount
+
 public:
     /**
      * Initializes a new transaction from the given arguments.
@@ -39,8 +42,7 @@ public:
      *         is {@code Double.NaN}, {@code Double.POSITIVE_INFINITY},
      *         or {@code Double.NEGATIVE_INFINITY}
      */
-    Transaction(string who, Date when, double amount) : who(who), when(make_unique<Date>(when)),
-                                                        amount(amount) {
+    Transaction(string who, Date *when, double amount) : who(who), when(when), amount(amount) {
         if (isnan(amount) || isinf(amount))
             throw runtime_error("Amount cannot be Nan or infinite");
     }
@@ -54,13 +56,17 @@ public:
      *         or {@code Double.NEGATIVE_INFINITY}
      */
     // TODO: change to regex split
-    Transaction(string transaction) {
+    explicit Transaction(string transaction) {
         vector<string> a = split(transaction, ' ');
         who = a[0];
-        when = make_unique<Date>(a[1]);
+        when = new Date(a[1]);
         amount = stod(a[2]);
         if (isnan(amount) || isinf(amount))
             throw runtime_error("Amount cannot be Nan or infinite");
+    }
+
+    ~Transaction() noexcept {
+        delete (when);
     }
 
     /**
@@ -68,7 +74,7 @@ public:
      *
      * @return the name of the customer involved in this transaction
      */
-    string who_() {
+    string who_() const {
         return who;
     }
 
@@ -78,8 +84,8 @@ public:
      * @return the date of this transaction
      */
     // TODO: modify to a more elegant form
-    unique_ptr<Date> when_() {
-        return make_unique<Date>(when->month_(), when->day_(), when->year_());
+    Date *when_() const {
+        return when;
     }
 
     /**
@@ -87,7 +93,7 @@ public:
      *
      * @return the amount of this transaction
      */
-    double amount_() {
+    double amount_() const {
         return amount;
     }
 
@@ -109,43 +115,38 @@ public:
     /**
      * Compares two transactions by date.
      */
-    static bool WhenOrder(Transaction &v, Transaction &w);
+    static bool WhenOrder(const Transaction *v, const Transaction *w);
 
     /**
      * Compares two transactions by customer name.
      */
-    static bool WhoOrder(Transaction &v, Transaction &w);
+    static bool WhoOrder(const Transaction *v, const Transaction *w);
 
     /**
      * Compares two transactions by amount.
      */
-    static bool HowMuchOrder(Transaction &v, Transaction &w);
-
-private:
-    string who;
-    unique_ptr<Date> when;
-    double amount;
+    static bool HowMuchOrder(const Transaction *v, const Transaction *w);
 };
 
 
 ostream &operator<<(ostream &stream, const Transaction &trans) {
-    stream << trans.who << " " << *trans.when << " " << trans.amount;
+    stream << trans.who << " " << *(trans.when) << " " << trans.amount;
 }
 
 bool operator==(const Transaction &trans1, const Transaction &trans2) {
     return trans1.amount == trans2.amount && trans1.who == trans2.who && trans1.when == trans2.when;
 }
 
-bool Transaction::WhenOrder(Transaction &v, Transaction &w) {
-    return *(v.when) < *(w.when);
+bool Transaction::WhenOrder(const Transaction *v, const Transaction *w) {
+    return *(v->when) < *(w->when);
 }
 
-bool Transaction::WhoOrder(Transaction &v, Transaction &w) {
-    return v.who < w.who;
+bool Transaction::WhoOrder(const Transaction *v, const Transaction *w) {
+    return v->who < w->who;
 }
 
-bool Transaction::HowMuchOrder(Transaction &v, Transaction &w) {
-    return v.amount < w.amount;
+bool Transaction::HowMuchOrder(const Transaction *v, const Transaction *w) {
+    return v->amount < w->amount;
 }
 
 

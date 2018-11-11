@@ -63,8 +63,8 @@ public:
     friend bool operator<(Counter &a1, Counter &a2);
 
 private:
-    const string name;
-    int count;
+    const string name;   // counter name
+    int count;           // current value
 };
 
 ostream &operator<<(ostream &stream, const Counter &item) {
