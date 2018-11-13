@@ -1,10 +1,9 @@
 #ifndef CH1_RESIZINGARRAYBAG_H
 #define CH1_RESIZINGARRAYBAG_H
 
-#include <vector>
+// TODO: use only start and finish
 #include <stdexcept>
 
-using std::vector;
 using std::runtime_error;
 
 /**
@@ -26,11 +25,26 @@ using std::runtime_error;
  */
 template<typename T>
 class ResizingArrayBag {
+private:
+    T *a;                     // array of items
+    int length;               // capacity of array
+    int n;                    // number of elements on stack
+
+    // for iterator
+    T *start;
+    T *finish;
+
 public:
     /**
      * Initializes an empty bag.
      */
-    ResizingArrayBag() : n(0), a(new T[2]), length(2) {}
+    ResizingArrayBag() : n(0), a(new T[2]), length(2), start(a), finish(a) {}
+
+    ~ResizingArrayBag() {
+        delete[](a);
+        start->~T();
+        finish->~T();
+    }
 
     /**
      * Is this bag empty?
@@ -55,66 +69,15 @@ public:
     void add(T item) {
         if (n == length) resize(2 * length);    // double size of array if necessary
         a[n++] = item;                          // add item
+        finish += 1;
     }
 
-private:
-    // an iterator
-    class Iterator {
-        T *data;
-        int pos;
-        int n;
-    public:
-        // initial iterator
-        Iterator(T *data_, int pos_, int n_) : data(data_), pos(pos_), n(n_) {}
+    // iterator
+    T *begin() noexcept { return start; }
+    T *end() noexcept { return finish; }
+    const T *begin() const noexcept { return start; }
+    const T *end() const noexcept { return finish; }
 
-        // get current value
-        T &operator*() { return data[pos]; }
-
-        // next iterator
-        Iterator &operator++() {
-            if (++pos == n) pos = 0;
-            return *this;
-        }
-
-        // judge is same?
-        bool operator!=(const Iterator &it) const { return pos != it.pos; }
-    };
-
-    // a const iterator
-    class ConstIterator {
-        T* data;
-        int pos;
-        int n;
-    public:
-        // initial iterator
-        ConstIterator(T* data_, int pos_, int n_) : data(data_), pos(pos_), n(n_) {}
-
-        // get current value
-        const T &operator*() { return data[pos]; }
-
-        // next iterator
-        ConstIterator &operator++() {
-            if (++pos == n)pos = 0;
-            return *this;
-        }
-
-        // judge is same?
-        bool operator!=(const ConstIterator &it) const { return pos != it.pos; }
-    };
-
-public:
-    /**
-     * Returns an iterator that iterates over the items in the bag in arbitrary order.
-     * @return an iterator that iterates over the items in the bag in arbitrary order
-     */
-
-    Iterator begin() { return {a, 0, n + 1}; }
-
-    Iterator end() { return {a, n, n + 1}; }
-
-    ConstIterator begin() const { return {a, 0, n + 1}; }
-
-    ConstIterator end() const { return {a, n, n + 1}; }
 
 private:
     // resize the underlying array holding the elements
@@ -130,12 +93,10 @@ private:
         a = temp;
         delete[](tmp);
         length = capacity;
+        start = a;
+        finish = a + n;
     }
 
-private:
-    T *a;  // array of items
-    int length;               // capacity of array
-    int n;                    // number of elements on stack
 };
 
 #endif //CH1_RESIZINGARRAYBAG_H

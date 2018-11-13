@@ -17,7 +17,7 @@ int main() {
     for (int i = 1; i <= n; ++i)
         sum1 += sqrt(i);
     int time1 = timer1.elapsedTime();
-    cout << sum1 << " costs " << time1 << " microseconds" << endl;
+    cout << sum1 << " costs (use math.sqrt) " << time1 << " microseconds" << endl;
 
     // sum of square roots of integers from 1 to n using Math.pow(x, 0.5).
     Stopwatch timer2;
@@ -26,6 +26,6 @@ int main() {
         sum2 += pow(i, 0.5);
     }
     int time2 = timer2.elapsedTime();
-    cout << sum2 << " costs " << time2 << " microseconds" << endl;
+    cout << sum2 << " costs (use pow(0.5)) " << time2 << " microseconds" << endl;
 
 }

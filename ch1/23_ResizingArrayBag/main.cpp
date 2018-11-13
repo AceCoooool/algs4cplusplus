@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "../head/ResizingArrayBag.h"
+#include "ResizingArrayBag.h"
 
 using namespace std;
 
@@ -11,7 +11,7 @@ using namespace std;
  */
 int main() {
     ifstream file("./data/tobe.txt");
-    ResizingArrayBag<string> bag;
+    ResizingArrayBag <string> bag;
     bag.add("Hello");
     bag.add("World");
     bag.add("How");

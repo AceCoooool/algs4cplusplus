@@ -22,6 +22,10 @@
  *  @author Kevin Wayne
  */
 class Interval2D {
+private:
+    Interval1D x;
+    Interval1D y;
+
 public:
     /**
      * Initializes a two-dimensional interval.
@@ -36,7 +40,7 @@ public:
      * @return true if this two-dimensional interval intersects
      *    that two-dimensional interval; false otherwise
      */
-    bool intersects(Interval2D &that) {
+    bool intersects(const Interval2D &that) const {
         if (!x.intersects(that.x)) return false;
         if (!y.intersects(that.y)) return false;
         return true;
@@ -47,7 +51,7 @@ public:
      * @param p the two-dimensional point
      * @return true if this two-dimensional interval contains the point p; false otherwise
      */
-    bool contains(Point2D &p) {
+    bool contains(const Point2D &p) const {
         return x.contains(p.x_()) && y.contains(p.y_());
     }
 
@@ -55,7 +59,7 @@ public:
      * Returns the area of this two-dimensional interval.
      * @return the area of this two-dimensional interval
      */
-    double area() {
+    double area() const {
         return x.length() * y.length();
     }
 
@@ -73,9 +77,6 @@ public:
      */
     friend bool operator==(const Interval2D &d1, const Interval2D &d2);
 
-private:
-    Interval1D x;
-    Interval1D y;
 };
 
 ostream &operator<<(ostream &stream, const Interval2D &d2) {

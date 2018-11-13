@@ -1,12 +1,9 @@
 #ifndef CH1_RESIZINGARRAYSTACK_H
 #define CH1_RESIZINGARRAYSTACK_H
 
-// TODO: add iterator support
-#include <vector>
 #include <stdexcept>
 
 using std::runtime_error;
-using std::vector;
 
 /**
  *  The {@code ResizingArrayStack} class represents a last-in-first-out (LIFO) stack
@@ -30,11 +27,16 @@ using std::vector;
  */
 template<typename T>
 class ResizingArrayStack {
+private:
+    T *a;
+    int length;
+    int n;          // number of elements on stack
+
 public:
     /**
      * Initializes an empty stack.
      */
-    ResizingArrayStack() : n(0), a(new T[2]()) {}
+    ResizingArrayStack() : n(0), a(new T[2]()), length(2) {}
 
     ~ResizingArrayStack() { delete[] (a); }
 
@@ -58,9 +60,9 @@ public:
      * Adds the item to this stack.
      * @param item the item to add
      */
-    void push(T item) {
+    void push(const T &item) {
         if (n == length) resize(2 * length);    // double size of array if necessary
-        a[n++] = item;                            // add item
+        a[n++] = item;                          // add item
     }
 
     /**
@@ -82,7 +84,7 @@ public:
      * @return the item most recently added to this stack
      * @throws java.util.NoSuchElementException if this stack is empty
      */
-    T peek() {
+    T peek() const {
         if (isEmpty()) throw runtime_error("Stack underflow");
         return a[n - 1];
     }
@@ -103,10 +105,6 @@ private:
         length = capacity;
     }
 
-private:
-    T *a;
-    int length = 2;
-    int n;          // number of elements on stack
 };
 
 #endif //CH1_RESIZINGARRAYSTACK_H

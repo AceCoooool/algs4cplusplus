@@ -30,6 +30,11 @@ using std::ostream;
  *  @author Kevin Wayne
  */
 class Accumulator {
+private:
+    int n = 0;            // number of data values
+    double sumval = 0.0;  // sample variance * (n-1)
+    double mu = 0.0;      // sample variance * (n-1)
+
 public:
     /**
      * Initializes an accumulator.
@@ -86,10 +91,6 @@ public:
      */
     friend ostream &operator<<(ostream &stream, Accumulator &acc);
 
-private:
-    int n = 0;            // number of data values
-    double sumval = 0.0;  // sample variance * (n-1)
-    double mu = 0.0;      // sample variance * (n-1)
 };
 
 ostream &operator<<(ostream &stream, Accumulator &acc) {

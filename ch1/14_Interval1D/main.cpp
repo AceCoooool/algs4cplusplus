@@ -20,16 +20,19 @@ int main() {
     cout << "Unsorted" << endl;
     for (auto inter: intervals)
         cout << inter << endl;
+    cout << endl;
 
     cout << "Sort by min endpoint" << endl;
     sort(intervals.begin(), intervals.end(), Interval1D::MinEndpointComparator);
     for (auto inter: intervals)
         cout << inter << endl;
+    cout << endl;
 
     cout << "Sort by max endpoint" << endl;
     sort(intervals.begin(), intervals.end(), Interval1D::MaxEndpointComparator);
     for (auto inter: intervals)
         cout << inter << endl;
+    cout << endl;
 
     cout << "Sort by length" << endl;
     sort(intervals.begin(), intervals.end(), Interval1D::LengthComparator);

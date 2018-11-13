@@ -56,13 +56,25 @@ public:
      *         or {@code Double.NEGATIVE_INFINITY}
      */
     // TODO: change to regex split
-    explicit Transaction(string transaction) {
+    explicit Transaction(string &transaction) {
         vector<string> a = split(transaction, ' ');
         who = a[0];
         when = new Date(a[1]);
         amount = stod(a[2]);
         if (isnan(amount) || isinf(amount))
             throw runtime_error("Amount cannot be Nan or infinite");
+    }
+
+    Transaction(const Transaction &transaction) {
+        who = transaction.who;
+        when = new Date(*transaction.when);  // TODO: using move operation
+        amount = transaction.amount;
+    }
+
+    Transaction &operator=(const Transaction &transaction) {
+        who = transaction.who;
+        when = new Date(*transaction.when);  // TODO: using move operation
+        amount = transaction.amount;
     }
 
     ~Transaction() noexcept {
@@ -115,17 +127,17 @@ public:
     /**
      * Compares two transactions by date.
      */
-    static bool WhenOrder(const Transaction *v, const Transaction *w);
+    static bool WhenOrder(const Transaction &v, const Transaction &w);
 
     /**
      * Compares two transactions by customer name.
      */
-    static bool WhoOrder(const Transaction *v, const Transaction *w);
+    static bool WhoOrder(const Transaction &v, const Transaction &w);
 
     /**
      * Compares two transactions by amount.
      */
-    static bool HowMuchOrder(const Transaction *v, const Transaction *w);
+    static bool HowMuchOrder(const Transaction &v, const Transaction &w);
 };
 
 
@@ -137,16 +149,16 @@ bool operator==(const Transaction &trans1, const Transaction &trans2) {
     return trans1.amount == trans2.amount && trans1.who == trans2.who && trans1.when == trans2.when;
 }
 
-bool Transaction::WhenOrder(const Transaction *v, const Transaction *w) {
-    return *(v->when) < *(w->when);
+bool Transaction::WhenOrder(const Transaction &v, const Transaction &w) {
+    return *(v.when) < *(w.when);
 }
 
-bool Transaction::WhoOrder(const Transaction *v, const Transaction *w) {
-    return v->who < w->who;
+bool Transaction::WhoOrder(const Transaction &v, const Transaction &w) {
+    return v.who < w.who;
 }
 
-bool Transaction::HowMuchOrder(const Transaction *v, const Transaction *w) {
-    return v->amount < w->amount;
+bool Transaction::HowMuchOrder(const Transaction &v, const Transaction &w) {
+    return v.amount < w.amount;
 }
 
 

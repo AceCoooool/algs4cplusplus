@@ -1,12 +1,9 @@
 #ifndef CH1_LINKEDSTACK_H
 #define CH1_LINKEDSTACK_H
 
-// TODO: add iterator support
 #include <stdexcept>
-#include <vector>
 
 using std::runtime_error;
-using std::vector;
 
 /**
  *  The {@code LinkedStack} class represents a last-in-first-out (LIFO) stack of
@@ -29,6 +26,21 @@ using std::vector;
  */
 template<typename T>
 class LinkedStack {
+private:
+    // helper linked list class
+    class Node {
+    public:
+        Node() : next(nullptr) {}
+        Node(T &item) : item(item), next(nullptr) {}
+
+        T item;
+        Node *next;
+    };
+
+private:
+    int n;         // size of the stack
+    Node *first;   // top of stack
+
 public:
     /**
      * Initializes an empty stack.
@@ -63,7 +75,7 @@ public:
      * Adds the item to this stack.
      * @param item the item to add
      */
-    void push(T item) {
+    void push(T &item) {
         auto tmp = first;
         first = new Node(item);
         first->next = tmp;
@@ -77,12 +89,12 @@ public:
      */
     T pop() {
         if (isEmpty()) throw runtime_error("Stack underflow");
-        T item = first->item;        // save item to return
+        T item = first->item;           // save item to return
         auto tmp = first;
         first = first->next;            // delete first node
         n--;
         delete (tmp);
-        return item;                   // return the saved item
+        return item;                    // return the saved item
     }
 
     /**
@@ -95,23 +107,6 @@ public:
         return first->item;
     }
 
-private:
-    // helper linked list class
-    class Node {
-    public:
-        Node() : next(nullptr) {}
-
-        Node(T item) : item(item), next(nullptr) {}
-
-//        ~Node() { if(next) delete(next); }
-
-        T item;
-        Node *next;
-    };
-
-private:
-    int n;        // size of the stack
-    Node *first;   // top of stack
 };
 
 #endif //CH1_LINKEDSTACK_H

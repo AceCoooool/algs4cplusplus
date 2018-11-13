@@ -25,6 +25,9 @@ using std::isnan;
  *  @author Kevin Wayne
  */
 class Interval1D {
+private:
+    double minval, maxval;
+
 public:
     /**
      * Initializes a closed interval [min, max].
@@ -126,8 +129,6 @@ public:
         else return false;
     }
 
-private:
-    double minval, maxval;
 };
 
 ostream &operator<<(ostream &stream, const Interval1D &item) {

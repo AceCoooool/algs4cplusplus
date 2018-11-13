@@ -1,7 +1,6 @@
 #ifndef CH1_STACK_H
 #define CH1_STACK_H
 
-// TODO: add iterator support
 #include <stdexcept>
 
 using std::runtime_error;
@@ -31,6 +30,20 @@ using std::runtime_error;
  */
 template<typename T>
 class Stack {
+private:
+    // helper linked list class
+    class Node {
+    public:
+        Node() : next(nullptr) {}
+        Node(T item) : item(item), next(nullptr) {}
+
+        T item;
+        Node *next;
+    };
+
+    int n;          // size of the stack
+    Node *first;    // top of stack
+
 public:
     /**
      * Initializes an empty stack.
@@ -68,7 +81,7 @@ public:
      *
      * @param  item the item to add
      */
-    void push(T item) {
+    void push(T &item) {
         auto tmp = first;
         first = new Node(item);
         first->next = tmp;
@@ -83,12 +96,12 @@ public:
      */
     T pop() {
         if (isEmpty()) throw runtime_error("Stack underflow");
-        T item = first->item;        // save item to return
+        T item = first->item;           // save item to return
         auto tmp = first;
         first = first->next;            // delete first node
         n--;
         delete (tmp);
-        return item;                   // return the saved item
+        return item;                    // return the saved item
     }
 
     /**
@@ -101,20 +114,7 @@ public:
         if (isEmpty()) throw runtime_error("Stack underflow");
         return first->item;
     }
-
-private:
-    class Node {
-    public:
-        Node() : next(nullptr) {}
-
-        Node(T item) : item(item), next(nullptr) {}
-
-        T item;
-        Node *next;
-    };
-
-    int n;
-    Node *first;
+    
 };
 
 #endif //CH1_STACK_H

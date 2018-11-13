@@ -29,6 +29,11 @@ using std::ostringstream;
  *  @author Kevin Wayne
  */
 class LinearRegression {
+private:
+    double intercept, slope;
+    double r2;
+    double svar0, svar1;
+
 public:
     /**
      * Performs a linear regression on the data points {@code (y[i], x[i])}.
@@ -138,11 +143,6 @@ public:
     }
 
     friend ostream &operator<<(ostream &stream, const LinearRegression &lr);
-
-private:
-    double intercept, slope;
-    double r2;
-    double svar0, svar1;
 };
 
 ostream &operator<<(ostream &stream, const LinearRegression &lr) {

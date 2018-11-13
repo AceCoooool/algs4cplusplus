@@ -1,11 +1,8 @@
 #ifndef CH1_RESIZINGARRAYQUEUE_H
 #define CH1_RESIZINGARRAYQUEUE_H
 
-// TODO: add iterator support
-#include <vector>
 #include <stdexcept>
 
-using std::vector;
 using std::runtime_error;
 
 /**
@@ -30,6 +27,13 @@ using std::runtime_error;
  */
 template<typename T>
 class ResizingArrayQueue {
+private:
+    T *q;                     // queue elements
+    int length;               // capacity of q
+    int n;                    // number of elements on queue
+    int first;                // index of first element of queue
+    int last;                 // index of next available slot
+
 public:
     /**
      * Initializes an empty queue.
@@ -42,7 +46,7 @@ public:
      * Is this queue empty?
      * @return true if this queue is empty; false otherwise
      */
-    bool isEmpty() {
+    bool isEmpty() const {
         return n == 0;
     }
 
@@ -50,7 +54,7 @@ public:
      * Returns the number of items in this queue.
      * @return the number of items in this queue
      */
-    int size() {
+    int size() const {
         return n;
     }
 
@@ -58,10 +62,10 @@ public:
      * Adds the item to this queue.
      * @param item the item to add
      */
-    void enqueue(T item) {
+    void enqueue(T &item) {
         // double size of array if necessary and recopy to front of array
         if (n == length) resize(2 * length);   // double size of array if necessary
-        q[last++] = item;             // add item
+        q[last++] = item;                      // add item
         if (last == length) last = 0;          // wrap-around
         n++;
     }
@@ -87,7 +91,7 @@ public:
      * @return the item least recently added to this queue
      * @throws java.util.NoSuchElementException if this queue is empty
      */
-    T peek() {
+    T peek() const {
         if (isEmpty()) throw runtime_error("Queue underflow");
         return q[first];
     }
@@ -108,13 +112,6 @@ private:
         last = n;
         length = capacity;
     }
-
-private:
-    T *q;  // queue elements
-    int length;               // capacity of q
-    int n;                    // number of elements on queue
-    int first;                // index of first element of queue
-    int last;                 // index of next available slot
 };
 
 

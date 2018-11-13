@@ -1,9 +1,6 @@
 #ifndef CH1_QUEUE_H
 #define CH1_QUEUE_H
 
-
-// TODO: add iterator support
-
 #include <stdexcept>
 
 using std::runtime_error;
@@ -29,6 +26,21 @@ using std::runtime_error;
  */
 template<typename T>
 class Queue {
+private:
+    // helper linked list class
+    class Node {
+    public:
+        Node() : next(nullptr) {}
+        Node(T item) : item(item), next(nullptr) {}
+
+        T item;
+        Node *next;
+    };
+
+    int n;          // number of elements on queue
+    Node *first;    // beginning of queue
+    Node *last;     // end of queue
+
 public:
     /**
      * Initializes an empty queue.
@@ -48,7 +60,7 @@ public:
      * Is this queue empty?
      * @return true if this queue is empty; false otherwise
      */
-    bool isEmpty() {
+    bool isEmpty() const {
         return first == nullptr;
     }
 
@@ -56,7 +68,7 @@ public:
      * Returns the number of items in this queue.
      * @return the number of items in this queue
      */
-    int size() {
+    int size() const {
         return n;
     }
 
@@ -65,7 +77,7 @@ public:
      * @return the item least recently added to this queue
      * @throws java.util.NoSuchElementException if this queue is empty
      */
-    T peek() {
+    T peek() const {
         if (isEmpty()) throw runtime_error("Queue underflow");
         return first->item;
     }
@@ -74,7 +86,7 @@ public:
      * Adds the item to this queue.
      * @param item the item to add
      */
-    void enqueue(T item) {
+    void enqueue(T &item) {
         auto tmp = last;
         last = new Node(item);
         if (isEmpty()) first = last;
@@ -98,21 +110,6 @@ public:
         return item;
     }
 
-private:
-    // helper linked list class
-    class Node {
-    public:
-        Node() : next(nullptr) {}
-
-        Node(T item) : item(item), next(nullptr) {}
-
-        T item;
-        Node *next;
-    };
-
-    int n;         // number of elements on queue
-    Node *first;    // beginning of queue
-    Node *last;     // end of queue
 };
 
 

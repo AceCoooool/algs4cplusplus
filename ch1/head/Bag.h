@@ -1,6 +1,7 @@
 #ifndef CH1_BAG_H
 #define CH1_BAG_H
 
+#include "LinkedBag.h"
 
 /**
  *  The {@code Bag} class represents a bag (or multiset) of
@@ -24,6 +25,13 @@
  */
 template<typename T>
 class Bag {
+private:
+    using Node = _node<T>;
+    using iterator = _link_iterator<T>;
+
+    int n;          // number of elements in bag
+    Node *first;    // beginning of bag
+
 public:
     /**
      * Initializes an empty bag.
@@ -42,7 +50,7 @@ public:
      * Is this bag empty?
      * @return true if this bag is empty; false otherwise
      */
-    bool isEmpty() {
+    bool isEmpty() const {
         return first == nullptr;
     }
 
@@ -50,7 +58,7 @@ public:
      * Returns the number of items in this bag.
      * @return the number of items in this bag
      */
-    int size() {
+    int size() const {
         return n;
     }
 
@@ -60,86 +68,21 @@ public:
      */
     void add(T item) {
         auto tmp = first;
-        first = new Node(item);
+        first = new Node();
+        first->item = item;
         first->next = tmp;
         n++;
     }
 
-private:
-    class Node {
-    public:
-        Node() : next(nullptr) {}
 
-        Node(T item) : item(item), next(nullptr) {}
-
-        T item;
-        Node *next;
-    };
-
-    // an iterator
-    class Iterator {
-        Node *data;
-        int pos;
-        int n;
-    public:
-        // initial iterator
-        Iterator(Node *data_, int pos_, int n_) : pos(pos_), n(n_), data(data_) {}
-
-        // get current value
-        T &operator*() { return data->item; }
-
-        // next iterator
-        Iterator &operator++() {
-            if (++pos == n)pos = 0;
-            data = data->next;
-            return *this;
-        }
-
-        // judge is same?
-        bool operator!=(const Iterator &it) const { return pos != it.pos; }
-    };
-
-    // a const iterator
-    class ConstIterator {
-        Node *data;
-        int pos;
-        int n;
-    public:
-        // initial iterator
-        ConstIterator(Node *data_, int pos_, int n_) : pos(pos_), n(n_), data(data_) {}
-
-        // get current value
-        const T &operator*() { return data->item; }
-
-        // next iterator
-        ConstIterator &operator++() {
-            if (++pos == n)pos = 0;
-            data = data->next;
-            return *this;
-        }
-
-        // judge is same?
-        bool operator!=(const ConstIterator &it) const { return pos != it.pos; }
-    };
-
-public:
     /**
      * Returns an iterator that iterates over the items in the bag in arbitrary order.
      * @return an iterator that iterates over the items in the bag in arbitrary order
      */
-
-    Iterator begin() { return {first, 0, n + 1}; }
-
-    Iterator end() { return {nullptr, n, n + 1}; }
-
-    ConstIterator begin() const { return {first, 0, n + 1}; }
-
-    ConstIterator end() const { return {nullptr, n, n + 1}; }
-
-private:
-    int n;     // number of elements in bag
-    Node *first;    // beginning of bag
-
+    iterator begin() { return _link_iterator<T>(first, 0); }
+    iterator end() { return _link_iterator<T>(nullptr, n); }
+    const iterator begin() const { return _link_iterator<T>(first, 0); }
+    const iterator end() const { return _link_iterator<T>(nullptr, n); }
 };
 
 #endif //CH1_BAG_H

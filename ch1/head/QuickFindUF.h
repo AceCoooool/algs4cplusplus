@@ -76,6 +76,10 @@ using std::to_string;
  *  @author Kevin Wayne
  */
 class QuickFindUF {
+private:
+    vector<int> id;   // id[i] = component identifier of i
+    int count;        // number of components
+
 public:
     /**
      * Initializes an empty union–find data structure with {@code n} sites
@@ -160,9 +164,6 @@ private:
         }
     }
 
-private:
-    vector<int> id;   // id[i] = component identifier of i
-    int count;        // number of components
 };
 
 #endif //CH1_QUICKFINDUF_H
